@@ -6,7 +6,6 @@
 
 class Miner {
 public:
-    Block getBlock();
     nonce_t mine(const Block&);
     bool verifyTransaction(const Transaction&);
     bool verifyBlock(const Block&);
