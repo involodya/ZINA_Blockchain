@@ -5,7 +5,10 @@ hash_t BlockChain::getHashOfLast() {
 }
 
 void BlockChain::addBlock(Block to_add) { // #TODO How to push exactly in required branch of blockchain?
-    return _chain.push_back(to_add);
+    std::bidirectional_iterator_tag place_to_insert = _positionOfBlock[to_add._previousBlockHash];
+
+    _chain.push_back(to_add);
+
 }
 
 

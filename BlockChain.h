@@ -1,6 +1,9 @@
 #pragma once
 #include "Block.h"
+#include "BranchingChain.h"
 #include <list>
+#include <unordered_map>
+#include <iterator>
 
 
 // #TODO Singleton
@@ -16,10 +19,10 @@ public:
     void update();
     hash_t getHashOfLast();
     void addBlock(Block to_add);
-private:
+// private:
     // static BlockChain* _pointerToInstance;
     // BlockChain() {
     // }
-    std::list<Block> _chain;
-    // std::list<Block> currentBlockChain;
+    std::list<Block> _verified_chain;
+    BranchingChain _unverified_chain;
 };
