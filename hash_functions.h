@@ -1,8 +1,10 @@
+#pragma once
 #include "definitions.h"
+#include "Constants.h"
+#include "Block.h"
 
-// TODO realization
-rsa_pair_t generateKeys() {
-    uint8_t *a = new uint8_t;
-    uint8_t *b = new uint8_t;
-    return {a, b};
-}
+rsa_pair_t generateKeys();
+
+hash_t calculateHash(const Block&);
+
+bool hashIsCorrect(hash_t current_hash);

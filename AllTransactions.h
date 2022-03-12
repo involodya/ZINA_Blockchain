@@ -1,29 +1,30 @@
-#include "Transaction.h"
-#include "definitions.h"
+// #include "Transaction.h"
+// #include "definitions.h"
 
-class MessageTransaction : Transaction {
-public:
-    MessageTransaction() = default;
+// @involodya @andzh1 Implement and expand
+// class MessageTransaction : Transaction {
+// public:
+//     MessageTransaction() = default;
 
-    Transaction createTransaction() {
-        return MessageTransaction();
-    }
+//     Transaction createTransaction() {
+//         return MessageTransaction();
+//     }
 
-    MessageTransaction(std::string message);
+//     MessageTransaction(std::string message);
 
-private:
-};
+// private:
+// };
 
-class MoneyTransaction : Transaction {
-public:
-    MoneyTransaction() = default;
+// class MoneyTransaction : Transaction {
+// public:
+//     MoneyTransaction() = default;
 
-    Transaction createTransaction() {
-        return MoneyTransaction();
-    }
+//     Transaction createTransaction() {
+//         return MoneyTransaction();
+//     }
 
-    MoneyTransaction(std::string message, currency_t value);
+//     MoneyTransaction(std::string message, currency_t value);
 
-private:
+// private:
 
-};
+// };

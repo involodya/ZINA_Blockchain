@@ -1,6 +1,8 @@
+#pragma once
 #include "definitions.h"
 
-struct Transaction {
+class Transaction {
+public:
     Transaction(const hash_t& hashOfSender,
                 const hash_t& hashOfRecipient,
                 currency_t value,

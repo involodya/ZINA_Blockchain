@@ -1,12 +1,13 @@
-#include "definitions.h"
-#include "Block.h"
-#include "BlockChain.h"
-#include "Transaction.h"
+#pragma once
+// #include "definitions.h"
+#include "Block.cpp"
+#include "BlockChain.cpp"
+// #include "Transaction.h"
 #include <set>
 
 class Miner {
 public:
-    nonce_t mine(const Block&);
+    Block mine(const Block&);
     bool verifyTransaction(const Transaction&);
     bool verifyBlock(const Block&);
     Block getBlock(); // Where do we get it from? #TODO
@@ -15,9 +16,10 @@ public:
     void createBlock();
     void addBlock();
 private:
-    Block _currentDlock;
+    Block _currentBlock;
     BlockChain _currentBlockChain;
 
     std::set<Transaction> _unproceedTransactions;
     
+    friend class Block;
 };
