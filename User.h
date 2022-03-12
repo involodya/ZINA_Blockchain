@@ -4,6 +4,6 @@ class User {
 public:
     void sendTransaction();
 private:
-    key_t _publicKey;
-    key_t _privateKey;
+    user_key_t _publicKey;
+    user_key_t _privateKey;
 };
