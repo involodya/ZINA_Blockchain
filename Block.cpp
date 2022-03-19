@@ -6,7 +6,7 @@ void Block::setNonce(nonce_t new_nonce) {
     _nonce = new_nonce;
 }
 
-void Block::dbg() {
+void Block::dbg() const {
     std::cerr << "_nonce: " << _nonce << std::endl;
     std::cerr << "_previousBlockHash: " << _previousBlockHash << std::endl;
     std::cerr << "_currentBlockHash: " << _currentBlockHash << std::endl;
