@@ -31,6 +31,9 @@ void Miner::sendBlock() { // TODO
 void Miner::addBlock() { 
     _currentBlockChain.addBlock(_currentBlock);
 }
+
+
+
 // #TODO @andzh1
 //     bool verifyTransaction(const Transaction&);
 //     bool verifyBlock(const Block&);

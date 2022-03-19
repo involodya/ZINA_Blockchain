@@ -1,8 +1,8 @@
-#include "definitions.h"
-#include "User.h"
+// #include "definitions.h"
+#include "Miner.cpp"
 
 
 int main() {
-    User user;
-    Transaction(hashOfRecipient, value, message);
+//     User user;
+//     Transaction(hashOfRecipient, value, message);
 }

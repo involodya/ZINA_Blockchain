@@ -4,6 +4,7 @@
 
 struct Block {
 public:
+    Block();
     void setNonce(nonce_t new_nonce);
     nonce_t _nonce = 0;
     std::list<Transaction> _listOfTransactions;
