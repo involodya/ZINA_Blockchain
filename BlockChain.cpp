@@ -1,33 +1,21 @@
 #include "BlockChain.h"
 
-hash_t BlockChain::get_hash_of_last() {
-
+void BlockChain::dbg() const {
+    std::cerr << "BlockChain" << std::endl;
+    std::cerr << "Contains of:" << std::endl;
+    _verified_chain.dbg();
+    std::cerr << std::endl;
+    _unverified_chain.dbg();
+    std::cerr << std::endl;
 }
 
-void BlockChain::add_block(Block to_add) { // #TODO How to push exactly in required branch of blockchain?
-
-
+void BlockChain::_proceed_block_to_chain() {
+    _verified_chain.push_block(_unverified_chain.get_block_to_push());
 }
 
-
-
-
-// // #TODO Singleton
-// class BlockChain {
-// public:
-//     // BlockChain static getInstance() { 
-//     //     if (_pointerToInstance == nullptr) {  // #TODO figure out how to check existance of object
-//     //         BlockChain instance = BlockChain();
-//     //         *_pointerToInstance = instance;
-//     //     }
-//     //     return *_pointerToInstance;
-//     // }
-//     void update();
-//     hash_t getHashOfLast();
-// private:
-//     // static BlockChain* _pointerToInstance;
-//     // BlockChain() {
-//     // }
-//     std::list<Block> _chain;
-//     // std::list<Block> currentBlockChain;
-// };
+void BlockChain::add_block(const Block& block_to_add) { // #TODO How to push exactly in required branch of blockchain?
+    _unverified_chain.addBlock(block_to_add);
+    if (_unverified_chain.length_of_max_chain() > MAX_LENGTH_OF_BRANCHING_CHAIN) {
+        _proceed_block_to_chain();
+    }
+}

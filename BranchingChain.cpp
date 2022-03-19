@@ -1,6 +1,18 @@
 #include "BranchingChain.h"
 #include <exception>
 
+void BranchingChain::dbg() const {
+    std::cerr << "BranchingChain" << std::endl;
+    std::cerr << "_blocks:" << std::endl;
+    for (auto it: _blocks) {
+        it.dbg();
+    }
+    std::cerr << "_index_of_block:" << std::endl;
+    for (auto i: _index_of_block) {
+        std::cerr << i.first << " - " << i.second << std::endl;
+    }
+}
+
 BranchingChain::BranchingChain() {
     Node default_node;
     default_node.block = Block();

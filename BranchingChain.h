@@ -12,12 +12,20 @@ class BranchingChain {
     struct Node
     {
         Block block;
-        int index_of_prev;
-        std::vector<int> successors; // = -1, if this Node is list of our tree (it has no successor)
+        int index_of_prev; 
+        std::vector<int> successors;
+        void dbg() const {
+            std::cerr << "Node in BranchingChain:" << std::endl;
+            block.dbg();
+            std::cerr << "index_of_prev = " << index_of_prev << std::endl;
+            std::cerr << "successors:";
+            for (auto s: successors) std::cerr << s << ' ';
+            std::cerr << std::endl;
+        }
     };
 public:
     void addBlock(const Block& to_add);
-    Block get_block_to_push(); // TODO:
+    Block get_block_to_push(); 
     BranchingChain();
     BranchingChain(const Block& first_block);
 
@@ -28,6 +36,8 @@ public:
     size_t length_of_max_chain() {
         return _get_length_of_chain(0);
     }
+
+    void dbg() const;
 private:
     std::vector<int> _indexes_of_all_blocks_of_subchain(int index);
     void _remove_unnecessary_chains();
