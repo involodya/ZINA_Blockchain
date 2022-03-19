@@ -7,8 +7,6 @@
 #include <set>
 #include <vector>
 
-
-
 // #TODO Singleton
 class BranchingChain {
     struct Node
@@ -19,19 +17,22 @@ class BranchingChain {
     };
 public:
     void addBlock(const Block& to_add);
-    Block push_to_blockchain(); // TODO:
+    Block get_block_to_push(); // TODO:
     BranchingChain();
     BranchingChain(const Block& first_block);
 
     size_t size() const {
         return _blocks.size();
     }
+
+    size_t length_of_max_chain() {
+        return _get_length_of_chain(0);
+    }
 private:
     std::vector<int> _indexes_of_all_blocks_of_subchain(int index);
-    void removeUnnecessaryChains();
-    int get_length_of_chain(int index);
-    std::queue<int> get_indexes_of_suitable_chains();
-    // size_t _length_of_largest_chain;
+    void _remove_unnecessary_chains();
+    size_t _get_length_of_chain(size_t index);
+    std::queue<int> _get_indexes_of_suitable_chains();
     std::unordered_map<hash_t, int> _index_of_block;
     std::vector<Node> _blocks;
 };

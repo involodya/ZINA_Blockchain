@@ -1,13 +1,11 @@
 #include "BlockChain.h"
 
-hash_t BlockChain::getHashOfLast() {
-    return _chain.back()._currentBlockHash;
+hash_t BlockChain::get_hash_of_last() {
+
 }
 
-void BlockChain::addBlock(Block to_add) { // #TODO How to push exactly in required branch of blockchain?
-    std::bidirectional_iterator_tag place_to_insert = _positionOfBlock[to_add._previousBlockHash];
+void BlockChain::add_block(Block to_add) { // #TODO How to push exactly in required branch of blockchain?
 
-    _chain.push_back(to_add);
 
 }
 

@@ -16,10 +16,10 @@ public:
     //     }
     //     return *_pointerToInstance;
     // }
-    void update();
-    hash_t getHashOfLast();
-    void addBlock(Block to_add);
-// private:
+    void update(); // 
+    hash_t get_hash_of_last();
+    void add_block(Block to_add);
+private:
     // static BlockChain* _pointerToInstance;
     // BlockChain() {
     // }
