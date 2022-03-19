@@ -1,21 +1,22 @@
 #include "Block.h"
 
+Block::Block() : _nonce(0), _previousBlockHash(DEFAULT_HASH), _currentBlockHash(DEFAULT_HASH), _listOfTransactions({}) {}
+
 void Block::setNonce(nonce_t new_nonce) {
     _nonce = new_nonce;
 }
 
-Block::Block() {
-    nonce_t _nonce = 0;
-    std::list<Transaction> _listOfTransactions;
-    hash_t _previousBlockHash = DEFAULT_HASH;
-    hash_t _currentBlockHash = DEFAULT_HASH;
+void Block::dbg() {
+    std::cerr << "_nonce: " << _nonce << std::endl;
+    std::cerr << "_previousBlockHash: " << _previousBlockHash << std::endl;
+    std::cerr << "_currentBlockHash: " << _currentBlockHash << std::endl;
+    std::cerr << "_listOfTransactions: ";
+    for (const Transaction &transaction: _listOfTransactions) {
+        std::cerr << '{' << transaction << '}';
+    }
+    std::cerr << std::endl;
 }
-/*
- Block();
-    void setNonce(nonce_t new_nonce);
-    nonce_t _nonce = 0;
-    std::list<Transaction> _listOfTransactions;
-    hash_t _previousBlockHash;
-    hash_t _currentBlockHash;
-};
-*/
+
+void Block::addTransaction(const Transaction &transaction) {
+    _listOfTransactions.emplace_back(transaction);
+}

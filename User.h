@@ -5,9 +5,11 @@
 class User {
 public:
     User();
+
     explicit User(rsa_pair_t _keys);
 
     static void sendTransaction(Transaction &transaction);
+
     static void signTransaction(Transaction &transaction);
 
 private:
