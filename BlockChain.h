@@ -1,6 +1,7 @@
 #pragma once
 #include "Block.h"
-#include "BranchingChain.h"
+#include "BranchingChain.cpp"
+#include "VerifiedChain.cpp"
 #include <list>
 #include <unordered_map>
 #include <iterator>
@@ -16,13 +17,11 @@ public:
     //     }
     //     return *_pointerToInstance;
     // }
-    void update(); // 
-    hash_t get_hash_of_last();
-    void add_block(Block to_add);
+    void update(); // Download latest version of blockchain from source
+    void add_block(const Block& block_to_add);
+    void dbg() const;
 private:
-    // static BlockChain* _pointerToInstance;
-    // BlockChain() {
-    // }
-    std::list<Block> _verified_chain;
+    void _proceed_block_to_chain();
+    VerifiedChain _verified_chain;
     BranchingChain _unverified_chain;
 };

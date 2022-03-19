@@ -7,11 +7,12 @@ public:
     User();
     explicit User(rsa_pair_t _keys);
 
+    void dbg() const;
     static void sendTransaction(Transaction &transaction);
     static void signTransaction(Transaction &transaction);
 
 private:
     hash_t _user_hash;
-    user_key_t _public_key;
+    hash_t _public_key;
     user_key_t _private_key;
 };
