@@ -21,7 +21,7 @@ Transaction::Transaction(const hash_t &hashOfSender, const hash_t &hashOfRecipie
                                                                        _hashOfRecipient(hashOfRecipient),
                                                                        _value(value),
                                                                        _message(message) {
-    // TODO calculate signature
+    // TODO: calculate signature
 }
 
 std::ostream &operator<<(std::ostream &out, const Transaction &transaction) {

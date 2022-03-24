@@ -1,7 +1,6 @@
-// #include "Transaction.h"
-// #include "definitions.h"
+#include "Transaction.h"
 
-// @involodya @andzh1 Implement and expand
+// TODO: @involodya @andzh1 Implement and expand
 // class MessageTransaction : Transaction {
 // public:
 //     MessageTransaction() = default;

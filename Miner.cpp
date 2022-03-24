@@ -20,21 +20,26 @@ void Miner::createBlock() {
     for (auto transaction: _unproceedTransactions) {
         new_block._listOfTransactions.push_back(transaction);
     }
-    new_block._previousBlockHash = Miner::_currentBlockChain.getHashOfLast();
+    new_block._previousBlockHash = _get_hash_of_last();
     new_block._currentBlockHash = calculateHash(new_block);
 }
 
-void Miner::sendBlock() { // TODO
+void Miner::sendBlock() { // TODO:
+    
+}
+
+hash_t Miner::_get_hash_of_last() { // TODO:
     
 }
 
 void Miner::addBlock() { 
-    _currentBlockChain.addBlock(_currentBlock);
+    _currentBlockChain.add_block(_currentBlock);
 }
 
 
 
-// #TODO @andzh1
+// #TODO: @andzh1
+//      _get_hash_of_last()
 //     bool verifyTransaction(const Transaction&);
 //     bool verifyBlock(const Block&);
 //     Block getBlock(); // Where do we get it from? #TODO

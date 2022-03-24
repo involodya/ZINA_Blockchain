@@ -18,7 +18,7 @@ public:
 private:
     Block _currentBlock;
     BlockChain _currentBlockChain;
-
+    hash_t _get_hash_of_last();
     std::set<Transaction> _unproceedTransactions;
     
     friend class Block;
