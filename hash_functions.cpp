@@ -1,12 +1,12 @@
 #include "hash_functions.h"
-
+/*
 // TODO realization
 rsa_pair_t generateKeys() {
     uint8_t *a = new uint8_t;
     uint8_t *b = new uint8_t;
     return {a, b};
 }
-
+*/
 hash_t sha256(const std::string &hash_object) {
     uint8_t hash[SHA256_DIGEST_LENGTH];
     SHA256_CTX sha256;
