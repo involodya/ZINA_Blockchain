@@ -1,5 +1,5 @@
 #include "Miner.h"
-#include "Constants.h"
+#include "constants.h"
 #include "hash_functions.cpp"
 
 Block Miner::mine(const Block& block_to_mine) {

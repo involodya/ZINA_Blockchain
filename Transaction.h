@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Constants.h"
+#include "constants.h"
 
 class Transaction {
 public:
@@ -11,13 +11,13 @@ public:
     hash_t _signature;
 
     Transaction(const hash_t &hashOfSender, const hash_t &hashOfRecipient,
-                currency_t value, std::string message);
+                currency_t value, std::string message="");
 
     void dbg();
 };
 
 Transaction::Transaction(const hash_t &hashOfSender, const hash_t &hashOfRecipient,
-                         currency_t value, std::string message = "") : _hashOfSender(hashOfSender),
+                         currency_t value, std::string message) : _hashOfSender(hashOfSender),
                                                                        _hashOfRecipient(hashOfRecipient),
                                                                        _value(value),
                                                                        _message(message) {

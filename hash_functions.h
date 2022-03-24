@@ -6,7 +6,7 @@
 #include <openssl/sha.h>
 
 #include "definitions.h"
-#include "Constants.h"
+#include "constants.h"
 #include "Block.h"
 
 rsa_pair_t generateKeys();
