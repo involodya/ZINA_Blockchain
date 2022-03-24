@@ -29,7 +29,7 @@ BranchingChain::BranchingChain(const Block& first_block) {
     _index_of_block[default_node.block._currentBlockHash] = 0;
 }
 
-void BranchingChain::addBlock(const Block& block_to_add) {
+void BranchingChain::add_block(const Block& block_to_add) {
     Node node_to_add;
     node_to_add.block = block_to_add;
     if (_blocks.size() != 0) {
@@ -87,7 +87,7 @@ void BranchingChain::_remove_unnecessary_chains() {
     while (!blocks_to_transfer.empty()) {
         int current_index = blocks_to_transfer.front();
         blocks_to_transfer.pop();
-        new_chain.addBlock(_blocks[current_index].block);
+        new_chain.add_block(_blocks[current_index].block);
         for (auto index : _blocks[current_index].successors) {
             blocks_to_transfer.push(index);
         }
@@ -106,7 +106,7 @@ Block BranchingChain::get_block_to_push() {
     BranchingChain new_chain (_blocks[index_of_new_begin].block);
     std::vector<int> blocks_to_transfer = _indexes_of_all_blocks_of_subchain(index_of_new_begin);
     for (int i = 1; i < blocks_to_transfer.size(); ++i) {
-        new_chain.addBlock(_blocks[i].block);
+        new_chain.add_block(_blocks[i].block);
     }
     *this = new_chain;
     return block_to_push;

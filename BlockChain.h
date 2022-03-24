@@ -25,3 +25,4 @@ private:
     VerifiedChain _verified_chain;
     BranchingChain _unverified_chain;
 };
+

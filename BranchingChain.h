@@ -24,7 +24,7 @@ class BranchingChain {
         }
     };
 public:
-    void addBlock(const Block& to_add);
+    void add_block(const Block& to_add);
     Block get_block_to_push(); 
     BranchingChain();
     BranchingChain(const Block& first_block);
@@ -46,3 +46,4 @@ private:
     std::unordered_map<hash_t, int> _index_of_block;
     std::vector<Node> _blocks;
 };
+
