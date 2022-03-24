@@ -1,8 +1,7 @@
 #pragma once
 
-#include <unordered_map>
-#include "Transaction.h"
-#include "BlockChain.h"
+// #include <unordered_map>
+#include "VerifiedChain.h"
 
 struct Balances {
     std::unordered_map<hash_t, currency_t> _balances_table;

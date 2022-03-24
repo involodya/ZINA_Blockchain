@@ -11,6 +11,8 @@ struct ZINA {
 
     explicit ZINA(size_t integer_part);
 
+    ZINA() = default;
+
     ZINA(size_t integer_part, size_t fractional_part);
 
     ZINA &operator+=(const ZINA &other);
@@ -27,7 +29,6 @@ struct ZINA {
     bool operator>=(const ZINA &other) const;
 
     void dbg() const;
-
 };
 
 std::ostream &operator<<(std::ostream &out, const ZINA &zina);

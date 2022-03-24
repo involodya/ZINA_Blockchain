@@ -1,5 +1,6 @@
 #pragma once
 #include "Block.h"
+#include "Balances.h"
 #include <list>
 #include <unordered_map>
 #include <iterator>
