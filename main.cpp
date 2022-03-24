@@ -4,6 +4,7 @@
 #include "Block.cpp"
 #include "hash_functions.cpp"
 #include <boost/asio.hpp>
+#include <secp256k1.h>
 
 int main() {
 /*
@@ -18,6 +19,7 @@ int main() {
         std::cout << "Warning: could not connect : " << e.what() << std::endl;
     }
 */
+/*
     freopen("output.txt", "w+", stdout);
 
     Transaction t1(sha256("1"), sha256("2"), ZINA(100));
@@ -33,5 +35,6 @@ int main() {
     }
     std::cerr << calculateHash(b1) << ' ' << clock() * 1000.0 / CLOCKS_PER_SEC << std::endl;
     clock();
-
+*/
+    ecdsa();
 }
