@@ -4,7 +4,6 @@
 #include "Block.cpp"
 #include "hash_functions.cpp"
 #include <boost/asio.hpp>
-#include <pair>
 
 int main() {
 /*
@@ -21,17 +20,18 @@ int main() {
 */
     freopen("output.txt", "w+", stdout);
 
-    Transaction t1(sha256("1"), sha256("2"), 100);
-    Transaction t2(sha256("2"), sha256("1"), 100);
+    Transaction t1(sha256("1"), sha256("2"), ZINA(100));
+    Transaction t2(sha256("2"), sha256("1"), ZINA(100));
     Block b1;
     b1.addTransaction(t1);
     b1.addTransaction(t2);
-    for (int i = 0; i < 1e4; ++i) {
+    for (int i = 0; i < 1e2; ++i) {
         auto time = clock();
-        Transaction t(sha256("2"), sha256("1"), i);
+        Transaction t(sha256("2"), sha256("1"), ZINA(i));
         b1.addTransaction(t1);
         std::cout << i << ": " << calculateHash(b1) << ' ' << (clock() - time) * 1000.0 / CLOCKS_PER_SEC << std::endl;
     }
     std::cerr << calculateHash(b1) << ' ' << clock() * 1000.0 / CLOCKS_PER_SEC << std::endl;
     clock();
+
 }

@@ -2,7 +2,15 @@
 
 #include <unordered_map>
 #include "Transaction.h"
+#include "BlockChain.h"
 
-struct Balance {
-    std::unordered_map<hash_t,
+struct Balances {
+    std::unordered_map<hash_t, currency_t> _balances_table;
+
+    explicit Balances(const VerifiedChain &verifiedChain);
+
+    currency_t operator[](hash_t hash) const;
+    currency_t &operator[](hash_t hash);
+
+    void dbg() const;
 };
