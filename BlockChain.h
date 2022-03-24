@@ -1,7 +1,6 @@
 #pragma once
-#include "Block.h"
-#include "BranchingChain.cpp"
-#include "VerifiedChain.cpp"
+#include "BranchingChain.h"
+#include "VerifiedChain.h"
 #include <list>
 #include <unordered_map>
 #include <iterator>
@@ -26,3 +25,4 @@ private:
     BranchingChain _unverified_chain;
 };
 
+void printer();

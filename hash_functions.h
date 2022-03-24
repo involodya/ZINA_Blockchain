@@ -16,3 +16,5 @@ hash_t sha256(const std::string &hash_object);
 hash_t calculateHash(const Block &block);
 
 bool hashIsCorrect(hash_t current_hash);
+
+void f();

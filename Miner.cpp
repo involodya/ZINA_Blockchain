@@ -15,7 +15,7 @@ Block Miner::mine(const Block& block_to_mine) {
     return block_to_mine;
 }
 
-void Miner::createBlock() {
+void Miner::create_block() {
     Block new_block;
     for (auto transaction: _unproceedTransactions) {
         new_block._listOfTransactions.push_back(transaction);
@@ -24,7 +24,7 @@ void Miner::createBlock() {
     new_block._currentBlockHash = calculateHash(new_block);
 }
 
-void Miner::sendBlock() { // TODO:
+void Miner::send_block() { // TODO:
     
 }
 
@@ -32,11 +32,13 @@ hash_t Miner::_get_hash_of_last() { // TODO:
     
 }
 
-void Miner::addBlock() { 
+void Miner::add_block() { 
     _currentBlockChain.add_block(_currentBlock);
 }
 
-
+bool Miner::verify_coinbase_transaction(const Coinbase&) {
+    return true;
+}
 
 // #TODO: @andzh1
 //      _get_hash_of_last()

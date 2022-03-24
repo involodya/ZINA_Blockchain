@@ -7,6 +7,8 @@ rsa_pair_t generateKeys() {
     return {a, b};
 }
 */
+void f() {std::cout << "HI";}
+
 hash_t sha256(const std::string &hash_object) {
     uint8_t hash[SHA256_DIGEST_LENGTH];
     SHA256_CTX sha256;

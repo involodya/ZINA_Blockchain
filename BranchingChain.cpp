@@ -111,3 +111,4 @@ Block BranchingChain::get_block_to_push() {
     *this = new_chain;
     return block_to_push;
 }
+

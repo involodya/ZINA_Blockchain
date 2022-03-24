@@ -2,6 +2,7 @@
 
 #include <list>
 #include "Transaction.h"
+#include "Coinbase.h"
 
 struct Block {
     Block();
@@ -12,7 +13,7 @@ struct Block {
     hash_t _currentBlockHash;
 
     std::list<Transaction> _listOfTransactions;
-
+    Coinbase coinbase_transaction;
     void setNonce(nonce_t new_nonce);
     void addTransaction(const Transaction& transaction);
 

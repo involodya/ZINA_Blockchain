@@ -14,8 +14,12 @@ void BlockChain::_proceed_block_to_chain() {
 }
 
 void BlockChain::add_block(const Block& block_to_add) { // #TODO How to push exactly in required branch of blockchain?
-    _unverified_chain.addBlock(block_to_add);
+    _unverified_chain.add_block(block_to_add);
     if (_unverified_chain.length_of_max_chain() > MAX_LENGTH_OF_BRANCHING_CHAIN) {
         _proceed_block_to_chain();
     }
+}
+
+void printer() {
+    std::cout << "Blockchain works";
 }
