@@ -17,9 +17,12 @@ public:
         return _chain_of_blocks.size();
     }
 
+    // VerifiedChain() = default;
+
     void dbg() const;
 
-private:
+// private:
+public:
     const Block _last_block();
 
     bool _adding_block_has_correct_parent(const Block &block_to_add);

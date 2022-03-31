@@ -10,9 +10,9 @@ void Block::dbg() const {
     std::cerr << "_nonce: " << _nonce << std::endl;
     std::cerr << "_previousBlockHash: " << _previousBlockHash << std::endl;
     std::cerr << "_currentBlockHash: " << _currentBlockHash << std::endl;
-    std::cerr << "_listOfTransactions: ";
+    std::cerr << "_listOfTransactions: \n";
     for (const Transaction &transaction: _listOfTransactions) {
-        std::cerr << '{' << transaction << '}';
+        std::cerr << "    {" << transaction << '}' << '\n';
     }
     std::cerr << std::endl;
 }
