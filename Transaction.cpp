@@ -1,4 +1,3 @@
-
 #include "Transaction.h"
 
 Transaction::Transaction(const hash_t &hashOfSender, const hash_t &hashOfRecipient,

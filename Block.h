@@ -17,5 +17,7 @@ struct Block {
     void setNonce(nonce_t new_nonce);
     void addTransaction(const Transaction& transaction);
 
+    hash_t calculateHash() const;
+
     void dbg() const;
 };

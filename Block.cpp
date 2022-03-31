@@ -1,6 +1,7 @@
 #include "Block.h"
 
-Block::Block() : _nonce(0), _previousBlockHash(DEFAULT_HASH), _currentBlockHash(DEFAULT_HASH), _listOfTransactions({}) {}
+Block::Block() : _nonce(0), _previousBlockHash(DEFAULT_HASH), _currentBlockHash(DEFAULT_HASH),
+                 _listOfTransactions({}) {}
 
 void Block::setNonce(nonce_t new_nonce) {
     _nonce = new_nonce;
@@ -19,4 +20,13 @@ void Block::dbg() const {
 
 void Block::addTransaction(const Transaction &transaction) {
     _listOfTransactions.emplace_back(transaction);
+}
+
+hash_t Block::calculateHash() const {
+    std::stringstream ss;
+    ss << _nonce << _previousBlockHash << _currentBlockHash;
+    for (const Transaction &transaction: _listOfTransactions) {
+        ss << '{' << transaction << '}';
+    }
+    return Hash(ss.str());
 }

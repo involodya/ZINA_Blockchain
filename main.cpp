@@ -1,10 +1,11 @@
 // #include "definitions.h"
 //#include "Miner.h"
 #include "Transaction.h"
-#include "Block.cpp"
+//#include "Block.cpp"
+#include "Hash.h"
+#include "User.h"
 #include "hash_functions.cpp"
-#include <boost/asio.hpp>
-#include <secp256k1.h>
+//#include <boost/asio.hpp>
 
 int main() {
 /*
@@ -35,6 +36,22 @@ int main() {
     }
     std::cerr << calculateHash(b1) << ' ' << clock() * 1000.0 / CLOCKS_PER_SEC << std::endl;
     clock();
+
+
 */
-    ecdsa();
+/*
+    Hash h1("Hello, world!");
+    Hash h2;
+    h1.dbg();
+    h2.dbg();
+
+    h2 = h1;
+    h1.dbg();
+    h2.dbg();
+    */
+//    ecdsa();
+    for (int i = 0; i < 10; ++i) {
+        User u;
+        u.dbg();
+    }
 }

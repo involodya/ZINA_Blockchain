@@ -10,19 +10,12 @@
 #include <string>
 
 #include <sys/random.h>
-#include <openssl/sha.h>
 #include <secp256k1.h>
 
 #include "definitions.h"
 #include "constants.h"
 #include "Block.h"
+#include "Transaction.h"
 
-rsa_pair_t generateKeys();
+bool isHashCorrect(hash_t current_hash);
 
-hash_t sha256(const std::string &hash_object);
-
-hash_t calculateHash(const Block &block);
-
-bool hashIsCorrect(hash_t current_hash);
-
-void f();

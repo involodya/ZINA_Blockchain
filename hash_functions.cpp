@@ -1,14 +1,5 @@
 #include "hash_functions.h"
 
-/*
-// TODO realization
-rsa_pair_t generateKeys() {
-    uint8_t *a = new uint8_t;
-    uint8_t *b = new uint8_t;
-    return {a, b};
-}
-*/
-
 static void fill_random(uint8_t *data, size_t size) {
     ssize_t res = getrandom(data, size, 0);
     if (!(res < 0 || static_cast<size_t>(res) != size)) {
@@ -24,28 +15,9 @@ static void print_hex(uint8_t *data, size_t size) {
     std::cerr << std::endl;
 }
 
-hash_t sha256(const std::string &hash_object) {
-    uint8_t hash[SHA256_DIGEST_LENGTH];
-    SHA256_CTX sha256;
-    SHA256_Init(&sha256);
-    SHA256_Update(&sha256, hash_object.c_str(), hash_object.size());
-    SHA256_Final(hash, &sha256);
-    std::stringstream ss;
-    for (uint8_t i: hash) {
-        ss << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(i);
-    }
-    return ss.str();
-}
-
 void ecdsa() {
-    // SHA-256 from Hello, world!
-    uint8_t msg_hash[32] = {
-            0x31, 0x5F, 0x5B, 0xDB, 0x76, 0xD0, 0x78, 0xC4,
-            0x3B, 0x8A, 0xC0, 0x06, 0x4E, 0x4A, 0x01, 0x64,
-            0x61, 0x2B, 0x1F, 0xCE, 0x77, 0xC8, 0x69, 0x34,
-            0x5B, 0xFC, 0x94, 0xC7, 0x58, 0x94, 0xED, 0xD3,
-    };
-    print_hex(msg_hash, 32);
+    Hash msg_hash = Hash("Hello, world!");
+    msg_hash.dbg();
 
     secp256k1_pubkey pubkey;
     secp256k1_ecdsa_signature sig;
@@ -84,7 +56,7 @@ void ecdsa() {
     /*** Signing ***/
 
     /* Генерация подписи ECDSA `noncefp` и `ndata` позволяет передать пользовательскую функцию одноразового номера, передача `NULL` будет использовать безопасное значение по умолчанию RFC-6979. Подписание с допустимым контекстом, проверенным секретным ключом и функцией одноразового номера по умолчанию никогда не должно давать сбоев. */
-    return_val = secp256k1_ecdsa_sign(ctx, &sig, msg_hash, seckey, nullptr, nullptr);
+    return_val = secp256k1_ecdsa_sign(ctx, &sig, msg_hash._hash, seckey, nullptr, nullptr);
     assert(return_val);
 
     /* Сериализировать подпись в компактной форме*/
@@ -103,7 +75,7 @@ void ecdsa() {
     }
 
     /* Verify a signature. This will return 1 if it's valid and 0 if it's not. */
-    int is_signature_valid = secp256k1_ecdsa_verify(ctx, &sig, msg_hash, &pubkey);
+    int is_signature_valid = secp256k1_ecdsa_verify(ctx, &sig, msg_hash._hash, &pubkey);
 
     std::cerr << "Is the signature valid: " << (is_signature_valid ? "true" : "false") << "\n";
     std::cerr << "Secret Key: ";
@@ -118,20 +90,9 @@ void ecdsa() {
     memset(seckey, 0, sizeof(seckey));
 }
 
-hash_t calculateHash(const Block &block) {
-    std::stringstream ss;
-    ss << block._nonce << block._previousBlockHash << block._currentBlockHash;
-    for (const Transaction &transaction: block._listOfTransactions) {
-        ss << '{' << transaction << '}';
-    }
-    return sha256(ss.str());
-}
-
-bool hashIsCorrect(hash_t current_hash) { // hash is correct in our terms when it starts with
-    for (int i = 0; i < REQUIRED_LEN_OF_ZEROS_PREFIX_IN_HASH; ++i) {
-        if (current_hash[i] != '0') {
-            return false;
-        }
-    }
+bool isHashCorrect(const hash_t& current_hash) { // hash is correct in our terms when it starts with
+    /* TODO
+     * retutn current_hash < SOME_HASH;
+     */
     return true;
 }
