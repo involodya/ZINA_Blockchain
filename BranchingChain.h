@@ -16,11 +16,15 @@ class BranchingChain {
         int index_of_prev; 
         std::vector<int> successors;
         void dbg() const {
-            std::cerr << "Node in BranchingChain:" << std::endl;
+            std::cerr << "N_E_X_T_N_O_D_E\n";
+            std::cerr << "~~~~~~~~~~~~~~~\n";
+            // std::cerr << "Node in BranchingChain:" << std::endl;
             block.dbg();
             std::cerr << "index_of_prev = " << index_of_prev << std::endl;
-            std::cerr << "successors:";
+            std::cerr << "successors:    ";
             for (auto s: successors) std::cerr << s << ' ';
+            std::cerr << std::endl;
+            std::cerr << "~~~~~~~~~~~~~~~";
             std::cerr << std::endl;
         }
     };
@@ -31,7 +35,7 @@ public:
     BranchingChain(const Block& first_block);
 
     size_t size() const {
-        return _blocks.size();
+        return _nodes.size();
     }
 
     size_t length_of_max_chain() {
@@ -45,6 +49,6 @@ private:
     size_t _get_length_of_chain(size_t index);
     std::queue<int> _get_indexes_of_suitable_chains();
     std::unordered_map<hash_t, int> _index_of_block;
-    std::vector<Node> _blocks;
+    std::vector<Node> _nodes;
 };
 

@@ -1,4 +1,5 @@
 #include "ZINA.h"
+#include <exception>
 
 ZINA::ZINA(size_t integer_part) : _integer_part(integer_part),
                                   _fractional_part(0) {}
@@ -10,20 +11,21 @@ ZINA::ZINA(size_t integer_part, size_t fractional_part) : _integer_part(integer_
 ZINA &ZINA::operator+=(const ZINA &other) {
     _fractional_part += other._fractional_part % MOD_OF_DECIMAL_PLACES;
     _integer_part += other._integer_part + _fractional_part / MOD_OF_DECIMAL_PLACES;
-
+    _fractional_part %= MOD_OF_DECIMAL_PLACES;
     return *this;
 }
 
 ZINA &ZINA::operator-=(const ZINA &other) {
     if ((other._integer_part > _integer_part) or
         (other._integer_part == _integer_part and other._fractional_part > _fractional_part)) {
-        // TODO exception
+            throw std::logic_error("ZINA can not be lower than 0");
     }
     _integer_part -= other._integer_part;
     if (other._fractional_part > _fractional_part) {
         _integer_part -= 1;
-        _fractional_part += NUMBER_OF_DECIMAL_PLACES;
+        _fractional_part += MOD_OF_DECIMAL_PLACES;
     }
+
     _fractional_part -= other._fractional_part;
 
     return *this;

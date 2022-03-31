@@ -2,8 +2,7 @@
 
 #include "constants.h"
 
-class Coinbase {
-public:
+struct Coinbase {
     hash_t _hashOfRecipient;
     currency_t _value = BASIC_VALUE_OF_COINBASE_TRANSACTION;
     std::string _message;
@@ -13,3 +12,5 @@ public:
     Coinbase() = default;
     void dbg();
 };
+
+std::ostream &operator<<(std::ostream &out, const Coinbase &coinbase);
