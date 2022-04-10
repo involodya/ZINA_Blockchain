@@ -1,7 +1,6 @@
 #include "Block.h"
 
-Block::Block() : _nonce(0), _previousBlockHash(DEFAULT_HASH), _currentBlockHash(DEFAULT_HASH),
-                 _listOfTransactions({}) {}
+Block::Block() : _nonce(0), _listOfTransactions({}) {}
 
 void Block::setNonce(nonce_t new_nonce) {
     _nonce = new_nonce;
