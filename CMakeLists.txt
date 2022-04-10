@@ -6,7 +6,9 @@ set(GCC_COVERAGE_COMPILE_FLAGS "-fsanitize=address,alignment,bool,bounds,enum,fl
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_LOCAL_JUDGE")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GCC_COVERAGE_COMPILE_FLAGS}")
 
-set(CMAKE_CXX_STANDARD 14)
+
+set(CMAKE_SOURCE_DIR ${PROJECT_SOURCE_DIR})
+set(CMAKE_CXX_STANDARD 20)
 
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
@@ -49,4 +51,7 @@ add_library(User SHARED User.cpp)
 
 add_executable(TESTER blockchain_test.cpp)
 target_link_libraries(TESTER BlockChain)
+
+add_executable(USER_INTERFACE User_interface.cpp)
+target_link_libraries(USER_INTERFACE BlockChain User)
 

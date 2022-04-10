@@ -74,3 +74,9 @@ std::ostream &operator<<(std::ostream &out, const ZINA &zina) {
     out << zina._integer_part << '.' << zina._fractional_part;
     return out;
 }
+
+
+std::istream &operator>>(std::istream &in, ZINA &zina) {
+    in >> zina._integer_part >> zina._fractional_part;
+    return in;
+}

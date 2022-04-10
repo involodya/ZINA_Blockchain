@@ -32,3 +32,4 @@ struct ZINA {
 };
 
 std::ostream &operator<<(std::ostream &out, const ZINA &zina);
+std::istream &operator>>(std::istream &in, ZINA &zina);

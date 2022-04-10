@@ -1,9 +1,7 @@
 #pragma once
-// #include "definitions.h"
 #include "Block.cpp"
 #include "BlockChain.cpp"
 #include "Coinbase.h"
-// #include "Transaction.h"
 #include <set>
 
 class Miner {
@@ -16,8 +14,8 @@ public:
 
     bool verify_block(const Block &block);
 
-    Block get_block(); // Where do we get it from? #TODO
-    Transaction get_transaction(); // Where do we get it from? #TODO
+    Block get_block(); // Where do we get it from? #TODO:
+    Transaction get_transaction(); // Where do we get it from? #TODO:
     void send_block();
 
     void create_block();

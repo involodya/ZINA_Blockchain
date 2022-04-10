@@ -4,6 +4,9 @@
 #include <iomanip>
 #include <iostream>
 
+// #define BOOST_ERROR_CODE_HEADER_ONLY
+// #include <boost/system/error_code.hpp>
+// #include <boost/asio/ssl/impl/src.hpp>
 #include <openssl/sha.h>
 
 struct Hash {

@@ -1,6 +1,8 @@
 #!/bin/bash
 
+filename=$1
+
 cd bin/
-./TESTER
+./$filename
 cd ..
 
