@@ -2,7 +2,7 @@
 #include "Block.h"
 #include "Balances.h"
 #include <list>
-#include <unordered_map>
+#include <map>
 #include <iterator>
 #include <queue>
 #include <set>
@@ -47,7 +47,7 @@ public:
     void _remove_unnecessary_chains();
     size_t _get_length_of_chain(size_t index);
     std::queue<int> _get_indexes_of_suitable_chains();
-    std::unordered_map<hash_t, int> _index_of_block;
+    std::map<hash_t, int> _index_of_block;
     std::vector<Node> _nodes;
 };
 

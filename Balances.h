@@ -1,10 +1,10 @@
 #pragma once
 
-// #include <unordered_map>
+#include <map>
 #include "VerifiedChain.h"
 
 struct Balances {
-    std::unordered_map<hash_t, currency_t> _balances_table;
+    std::map<hash_t, currency_t> _balances_table;
 
     explicit Balances(const VerifiedChain &verifiedChain);
 

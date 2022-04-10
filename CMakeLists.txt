@@ -12,9 +12,14 @@ set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 
 add_library(ZINA SHARED ZINA.cpp)
+add_library(Hash SHARED Hash.cpp)
+target_link_libraries(Hash PUBLIC ssl crypto secp256k1)
+
+add_library(definitions SHARED definitions.cpp)
+target_link_libraries(definitions PUBLIC ZINA Hash)
 
 add_library(constants SHARED constants.cpp)
-target_link_libraries(constants PUBLIC ZINA)
+target_link_libraries(constants PUBLIC definitions)
 
 add_library(Transaction SHARED Transaction.cpp)
 target_link_libraries(Transaction PUBLIC constants)
@@ -26,7 +31,7 @@ add_library(Block SHARED Block.cpp)
 target_link_libraries(Block PUBLIC Coinbase Transaction)
 
 add_library(hash_functions SHARED hash_functions.cpp)
-target_link_libraries(hash_functions PUBLIC Block ssl crypto secp256k1 constants)
+target_link_libraries(hash_functions PUBLIC Block constants)
 
 add_library(VerifiedChain SHARED VerifiedChain.cpp)
 target_link_libraries(VerifiedChain PUBLIC Block)
