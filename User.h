@@ -12,16 +12,18 @@ public:
 
     void dbg() const;
 
-    static void sendTransaction(Transaction &transaction);
+    void sendTransaction(Transaction &transaction);
 
-    static void signTransaction(Transaction &transaction);
+    void signTransaction(Transaction &transaction);
 
     static void fill_random(uint8_t *data, size_t size);
 
     static void print_hex(const uint8_t *data, size_t size);
 
+    Hash getHash();
+
 private:
     ecc_pair_t _keys{};
-    uint8_t compressed_pubkey[COMPRESSED_PUBLIC_KEY_SIZE]{};
-    secp256k1_context *ctx = secp256k1_context_create(SECP256K1_CONTEXT_SIGN | SECP256K1_CONTEXT_SIGN);
+    compressed_public_key_t _compressed_pubkey;
+    secp256k1_context *_ctx = secp256k1_context_create(SECP256K1_CONTEXT_SIGN | SECP256K1_CONTEXT_VERIFY);
 };

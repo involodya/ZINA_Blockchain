@@ -19,3 +19,12 @@
 
 bool isHashCorrect(hash_t current_hash);
 
+struct ecc_pair_t {
+    secret_key_t secret_key;
+    public_key_t public_key;
+
+    ~ecc_pair_t() {
+        memset(secret_key, 0, SECRET_KEY_SIZE);
+        delete[] secret_key;
+    }
+};

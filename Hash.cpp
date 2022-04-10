@@ -13,6 +13,11 @@ Hash::Hash(const std::string &hash_object) : _hash(new uint8_t[HASH_SIZE]) {
     SHA256_Final(_hash, &sha256);
 }
 
+Hash::Hash(const Hash &other) {
+    _hash = new uint8_t[HASH_SIZE];
+    memcpy(_hash, other._hash, sizeof(uint8_t) * HASH_SIZE);
+}
+
 Hash &Hash::operator=(const Hash& other) {
     if (this == &other) {
         return *this;
@@ -50,10 +55,17 @@ void Hash::dbg() const {
     std::cerr << "\thash: " << *this << std::endl;
 }
 
+Hash::~Hash() {
+    delete[] _hash;
+}
+
+
 std::ostream &operator<<(std::ostream &out, const Hash &hash) {
     out << "0x";
+    out.setf(std::ios::hex, std::ios::basefield);
     for (size_t i = 0; i < HASH_SIZE; ++i) {
         out << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(hash._hash[i]);
     }
+    out.unsetf(std::ios::hex);
     return out;
 }

@@ -13,7 +13,11 @@ struct Hash {
 
     explicit Hash(const std::string &hash_object);
 
+    Hash(const Hash& other);
+
     Hash &operator=(const Hash& other);
+
+    ~Hash();
 
     bool operator==(const Hash &other) const;
 

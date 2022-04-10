@@ -4,6 +4,7 @@
 #include "Hash.h"
 
 #include <iostream>
+#include <cstring>
 
 #include <secp256k1.h>
 
@@ -13,8 +14,6 @@ using currency_t = ZINA;
 
 using secret_key_t = uint8_t *;
 using public_key_t = secp256k1_pubkey;
-struct ecc_pair_t {
-    secret_key_t secret_key;
-    public_key_t public_key;
-};
+using compressed_public_key_t = uint8_t *;
+
 using signature_t = secp256k1_ecdsa_signature;

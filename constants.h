@@ -11,3 +11,4 @@ const size_t PUBLIC_KEY_SIZE = 32;
 const size_t SECRET_KEY_SIZE = 32;
 const size_t SIGNATURE_SIZE = 32;
 const size_t COMPRESSED_PUBLIC_KEY_SIZE = 33;
+const size_t SERIALIZED_SIGNATURE_SIZE = 64;

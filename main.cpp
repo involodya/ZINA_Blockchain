@@ -4,6 +4,7 @@
 //#include "Block.cpp"
 #include "Hash.h"
 #include "User.h"
+#include "ZINA.h"
 #include "hash_functions.cpp"
 //#include <boost/asio.hpp>
 
@@ -49,9 +50,21 @@ int main() {
     h1.dbg();
     h2.dbg();
     */
-//    ecdsa();
+    ecdsa();
+/*
     for (int i = 0; i < 10; ++i) {
+        std::cerr << i << std::endl;
         User u;
         u.dbg();
+        std::cerr << i << std::endl;
     }
+    std::cerr << 322 << std::endl;*/
+    User u1;
+    User u2;
+    u1.dbg();
+    u2.dbg();
+    Transaction t(u1.getHash(), u2.getHash(), ZINA(10));
+    t.dbg();
+    u1.signTransaction(t);
+    t.dbg();
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "constants.h"
+#include "Hash.h"
 
 class Transaction {
 public:
@@ -8,10 +9,13 @@ public:
     hash_t _hashOfRecipient;
     currency_t _value;
     std::string _message;
-    hash_t _signature;
+    signature_t _signature;
+    uint8_t serialized_signature[SERIALIZED_SIGNATURE_SIZE]{};
 
     Transaction(const hash_t &hashOfSender, const hash_t &hashOfRecipient,
-                currency_t value, std::string message="");
+                currency_t value, const std::string &message = "");
+
+    uint8_t *getValueHash() const;
 
     void dbg();
 };
