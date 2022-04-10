@@ -13,14 +13,6 @@ void BranchingChain::dbg() const {
     }
 }
 
-BranchingChain::BranchingChain() {
-    Node default_node;
-    default_node.block = Block();
-    default_node.index_of_prev = -1;
-    _nodes.push_back(default_node);
-    _index_of_block[default_node.block._currentBlockHash] = 0;
-}
-
 BranchingChain::BranchingChain(const Block& first_block) {
     Node default_node;
     default_node.block = first_block;
@@ -31,13 +23,13 @@ BranchingChain::BranchingChain(const Block& first_block) {
 
 void BranchingChain::add_block(const Block& block_to_add) {
     Node node_to_add;
+    node_to_add.index_of_prev = 0;
     node_to_add.block = block_to_add;
-    if (_nodes.size() != 0) {
-        node_to_add.index_of_prev = _index_of_block[block_to_add._previousBlockHash];
-    }
     _index_of_block[block_to_add._currentBlockHash] = _nodes.size();
-    int index_of_prev = _index_of_block[block_to_add._previousBlockHash];
-    _nodes[index_of_prev].successors.push_back(_nodes.size());
+    if (_index_of_block.find(block_to_add._previousBlockHash) != _index_of_block.end()) {
+        node_to_add.index_of_prev = _index_of_block[block_to_add._previousBlockHash];
+    } 
+    _nodes[node_to_add.index_of_prev].successors.push_back(_nodes.size());
     _nodes.push_back(node_to_add);
 }
 
@@ -78,11 +70,10 @@ std::vector<int> BranchingChain::_indexes_of_all_blocks_of_subchain(int index) {
 }
 
 void BranchingChain::_remove_unnecessary_chains() {
-    if (_get_length_of_chain(0) < MAX_LENGTH_OF_BRANCHING_CHAIN) return;
     // If our BranchingChain is small, we don't need to remove unnecessary chains
+    if (_get_length_of_chain(0) < MAX_LENGTH_OF_BRANCHING_CHAIN) return;
     BranchingChain new_chain (_nodes[0].block);
     std::queue<int> blocks_to_transfer = _get_indexes_of_suitable_chains();
-    // blocks_to_transfer.push(index_of_max_chain);
     while (!blocks_to_transfer.empty()) {
         int current_index = blocks_to_transfer.front();
         blocks_to_transfer.pop();
@@ -96,16 +87,18 @@ void BranchingChain::_remove_unnecessary_chains() {
 
 Block BranchingChain::get_block_to_push() {
     _remove_unnecessary_chains();
-    /*Here we suppose that our BranchingChain has only one parent, because probability of fact 
-    that we have at least 2 chaing of length MAX_LENGTH_OF_BRANCHING_CHAIN is extremelly small
+    /*
+    Here we suppose that our BranchingChain has only one parent, because probability of fact 
+    that we have at least 2 chains of length MAX_LENGTH_OF_BRANCHING_CHAIN is extremelly small
     (we actually set MAX_LENGTH_OF_BRANCHING_CHAIN such that this probability is very small)
     */
     int index_of_new_begin = _get_indexes_of_suitable_chains().front();
-    Block block_to_push = _nodes[0].block;
-    BranchingChain new_chain (_nodes[index_of_new_begin].block);
+    
+    Block block_to_push = _nodes[index_of_new_begin].block;
+    BranchingChain new_chain;
     std::vector<int> blocks_to_transfer = _indexes_of_all_blocks_of_subchain(index_of_new_begin);
     for (int i = 1; i < blocks_to_transfer.size(); ++i) {
-        new_chain.add_block(_nodes[i].block);
+        new_chain.add_block(_nodes[blocks_to_transfer[i]].block);
     }
     *this = new_chain;
     return block_to_push;

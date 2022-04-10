@@ -31,19 +31,18 @@ class BranchingChain {
 public:
     void add_block(const Block& to_add);
     Block get_block_to_push(); 
-    BranchingChain();
-    BranchingChain(const Block& first_block);
+    BranchingChain(const Block& first_block = Block());
 
     size_t size() const {
-        return _nodes.size();
+        return _nodes.size() - 1;
     }
 
     size_t length_of_max_chain() {
-        return _get_length_of_chain(0);
+        return _get_length_of_chain(0) - 1;
     }
 
     void dbg() const;
-private:
+// private:
     std::vector<int> _indexes_of_all_blocks_of_subchain(int index);
     void _remove_unnecessary_chains();
     size_t _get_length_of_chain(size_t index);

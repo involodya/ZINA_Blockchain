@@ -46,12 +46,42 @@ void branching_chain_test() {
     // v.dbg();
 }
 
+void blockchain_test() {
+    BlockChain bch;
+    // std::cerr << bch._unverified_chain.size() << " - sz of _unverified_chain\n";
+    // std::cerr << bch._verified_chain.size() << " - sz of _verified_chain\n";
+
+    Block first_block;
+    first_block._currentBlockHash = "1";
+    // first_block.dbg();
+    Transaction t("his_hash", "his_hash", ZINA(1, 337), "Send this to Pavel");
+    first_block.addTransaction(t);
+    bch.add_block(first_block);
+    std::cerr << bch._unverified_chain._index_of_block[first_block._currentBlockHash] << '\n';
+    std::cerr << bch._unverified_chain.size() << " - sz of _unverified_chain\n";
+    std::cerr << bch._verified_chain.size() << " - sz of _verified_chain\n";
+
+    for (int _ = 2; _ <= 10; ++_) {
+        Block new_block;
+        new_block._currentBlockHash = std::to_string(_);
+        new_block._previousBlockHash = std::to_string(_ - 1);
+        bch.add_block(new_block);
+    }
+    bch.dbg();
+    assert(bch._unverified_chain.size() == MAX_LENGTH_OF_BRANCHING_CHAIN);
+    assert(bch._verified_chain.size() == 10 - MAX_LENGTH_OF_BRANCHING_CHAIN);
+
+}
+
 
 int main() {
     // verified_chain_test();
     // std::cerr << "VerifiedChain tests passed\n";
-    branching_chain_test();
-    std::cerr << "BranchingChain tests passed\n";
+    // branching_chain_test();
+    // std::cerr << "BranchingChain tests passed\n";
+    blockchain_test();
+    std::cerr << "BlockChain tests passed\n";
+
 
     // std::cout << x;
 }

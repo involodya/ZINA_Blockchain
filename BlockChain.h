@@ -19,10 +19,8 @@ public:
     void update(); // Download latest version of blockchain from source
     void add_block(const Block& block_to_add);
     void dbg() const;
-private:
+// private:
     void _proceed_block_to_chain();
     VerifiedChain _verified_chain;
     BranchingChain _unverified_chain;
 };
-
-void printer();
