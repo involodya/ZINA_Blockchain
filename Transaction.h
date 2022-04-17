@@ -2,22 +2,23 @@
 
 #include "constants.h"
 #include "Hash.h"
+#include "CPKey.h"
 
 class Transaction {
 public:
-    hash_t _hashOfSender;
-    hash_t _hashOfRecipient;
+    CPKey _keyOfSender;
+    CPKey _keyOfRecipient;
     currency_t _value;
     std::string _message;
     signature_t _signature;
     uint8_t serialized_signature[SERIALIZED_SIGNATURE_SIZE]{};
 
-    Transaction(const hash_t &hashOfSender, const hash_t &hashOfRecipient,
+    Transaction(const CPKey &keyOfSender, const CPKey &keyOfRecipient,
                 currency_t value, const std::string &message = "");
 
-    uint8_t *getValueHash() const;
+    Hash getValueHash() const;
 
-    void dbg();
+    void dbg() const;
 };
 
 std::ostream &operator<<(std::ostream &out, const Transaction &transaction);

@@ -2,7 +2,7 @@
 #include "constants.h"
 #include "hash_functions.h"
 
-Block Miner::mine(const Block& block_to_mine) {
+Block Miner::mine(const Block &block_to_mine) {
     Block mined_block = block_to_mine;
     for (nonce_t current_nonce = 0; current_nonce < MAX_NONCE; ++current_nonce) {
         mined_block.setNonce(current_nonce);
@@ -25,37 +25,46 @@ void Miner::create_block() {
 }
 
 void Miner::send_block() { // TODO:
-    
+
 }
 
 hash_t Miner::_get_hash_of_last() { // TODO:
-    
+    return Hash();
 }
 
-void Miner::add_block() { 
+void Miner::add_block() {
     _currentBlockChain.add_block(_currentBlock);
 }
 
-bool Miner::verify_coinbase_transaction(const Coinbase&) {
+bool Miner::verify_coinbase_transaction(const Coinbase &) {
     return true;
 }
 
-bool Miner::verify_transaction(const Transaction& transaction) {
-    auto pubkey = transaction
-    if (!secp256k1_ecdsa_signature_parse_compact(ctx, &transaction._signature, serialized_signature)) {
+bool Miner::verify_transaction(Transaction &transaction) {
+    CPKey sender_ckey = transaction._keyOfSender;
+    if (!secp256k1_ecdsa_signature_parse_compact(ctx_, &transaction._signature, transaction.serialized_signature)) {
         throw std::exception(); // Failed parsing the signature
     }
-    if (!secp256k1_ec_pubkey_parse(ctx, &pubkey, compressed_pubkey, COMPRESSED_PUBLIC_KEY_SIZE)) {
+
+    secp256k1_pubkey pubkey;
+    if (!secp256k1_ec_pubkey_parse(ctx_, &pubkey, sender_ckey.getDataPointer(), COMPRESSED_PUBLIC_KEY_SIZE)) {
         throw std::exception(); // Failed parsing the public key
     }
 
-    /* Verify a signature. This will return 1 if it's valid and 0 if it's not. */
-    int is_signature_valid = secp256k1_ecdsa_verify(ctx, &transaction._signature, msg_hash._hash, &pubkey);
+    // Verify a signature. This will return 1 if it's valid and 0 if it's not.
+    int is_signature_valid = secp256k1_ecdsa_verify(ctx_, &transaction._signature,
+                                                    transaction.getValueHash()._hash, &pubkey);
     return is_signature_valid;
+
 }
 
 bool Miner::verify_block(const Block &block) {
+    // TODO
+    return true;
+}
 
+Miner::~Miner() {
+    secp256k1_context_destroy(ctx_);
 }
 
 // #TODO: @andzh1

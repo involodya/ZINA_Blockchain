@@ -64,7 +64,7 @@ std::ostream &operator<<(std::ostream &out, const Hash &hash) {
     out << "0x";
     out.setf(std::ios::hex, std::ios::basefield);
     for (size_t i = 0; i < HASH_SIZE; ++i) {
-        out << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(hash._hash[i]);
+        out << static_cast<int>(hash._hash[i]);
     }
     out.unsetf(std::ios::hex);
     return out;
