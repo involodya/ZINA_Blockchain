@@ -1,11 +1,28 @@
-cmake_minimum_required(VERSION 3.18)
-project(ZINA_Blockchain)
+cmake_minimum_required(VERSION 3.5)
 
-set(GCC_COVERAGE_COMPILE_FLAGS "-Wall -Wextra -Weffc++ -Wc++0x-compat -Wc++11-compat -Wc++14-compat -Waggressive-loop-optimizations -Walloc-zero -Walloca -Walloca-larger-than=8192 -Warray-bounds -Wcast-align -Wcast-qual -Wchar-subscripts -Wconditionally-supported -Wconversion -Wctor-dtor-privacy -Wdangling-else -Wduplicated-branches -Wempty-body -Wfloat-equal -Wformat-nonliteral -Wformat-security -Wformat-signedness -Wformat=2 -Wformat-overflow=2 -Wformat-truncation=2 -Winline -Wlarger-than=8192 -Wvla-larger-than=8192 -Wlogical-op -Wmissing-declarations -Wnon-virtual-dtor -Wopenmp-simd -Woverloaded-virtual -Wpacked -Wpointer-arith -Wredundant-decls -Wrestrict -Wshadow -Wsign-promo -Wstack-usage=8192 -Wstrict-null-sentinel -Wstrict-overflow=2 -Wstringop-overflow=4 -Wsuggest-attribute=noreturn -Wsuggest-final-types -Wsuggest-override -Wswitch-default -Wswitch-enum -Wsync-nand -Wundef -Wunreachable-code -Wunused -Wvariadic-macros -Wno-literal-suffix -Wno-missing-field-initializers -Wnarrowing -Wno-old-style-cast -Wvarargs -Waligned-new -Walloc-size-larger-than=1073741824 -Walloc-zero -Walloca -Walloca-larger-than=8192 -Wcast-align=strict -Wdangling-else -Wduplicated-branches -Wformat-overflow=2 -Wformat-truncation=2 -Wmissing-attributes -Wmultistatement-macros -Wrestrict -Wshadow=global -Wsuggest-attribute=malloc -fcheck-new -fsized-deallocation -fstack-check -fstrict-overflow -fchkp-first-field-has-own-bounds -fchkp-narrow-to-innermost-array -flto-odr-type-merging -fno-omit-frame-pointer")
-set(GCC_COVERAGE_COMPILE_FLAGS "-fsanitize=address,alignment,bool,bounds,enum,float-cast-overflow,float-divide-by-zero,integer-divide-by-zero,leak,nonnull-attribute,null,object-size,return,returns-nonnull-attribute,shift,signed-integer-overflow,undefined,unreachable,vla-bound,vptr")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_LOCAL_JUDGE")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GCC_COVERAGE_COMPILE_FLAGS}")
+project(ZINA_QT LANGUAGES CXX)
 
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# QtCreator supports the following variables for Android, which are identical to qmake Android variables.
+# Check https://doc.qt.io/qt/deployment-android.html for more information.
+# They need to be set before the find_package( ...) calls below.
+
+#if(ANDROID)
+#    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
+#    if (ANDROID_ABI STREQUAL "armeabi-v7a")
+#        set(ANDROID_EXTRA_LIBS
+#            ${CMAKE_CURRENT_SOURCE_DIR}/path/to/libcrypto.so
+#            ${CMAKE_CURRENT_SOURCE_DIR}/path/to/libssl.so)
+#    endif()
+#endif()
 
 set(CMAKE_SOURCE_DIR ${PROJECT_SOURCE_DIR})
 set(CMAKE_CXX_STANDARD 20)
@@ -15,7 +32,7 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 
 add_library(ZINA SHARED ZINA.cpp)
 add_library(Hash SHARED Hash.cpp)
-target_link_libraries(Hash PUBLIC ssl crypto secp256k1 boost_thread)
+target_link_libraries(Hash PUBLIC ssl crypto secp256k1)
 
 add_library(definitions SHARED definitions.cpp)
 target_link_libraries(definitions PUBLIC ZINA Hash)
@@ -49,17 +66,37 @@ target_link_libraries(BlockChain PUBLIC VerifiedChain BranchingChain)
 
 add_library(User SHARED User.cpp)
 
-add_library(CPKey SHARED  CPKey.cpp)
-target_link_libraries(User PUBLIC CPKey)
+#add_executable(TESTER blockchain_test.cpp)
+#target_link_libraries(TESTER BlockChain)
 
-add_executable(TESTER blockchain_test.cpp)
-target_link_libraries(TESTER BlockChain)
+#add_executable(USER_INTERFACE User_interface.cpp)
+#target_link_libraries(USER_INTERFACE BlockChain User)
 
-add_executable(USER_INTERFACE User_interface.cpp)
-target_link_libraries(USER_INTERFACE BlockChain User)
 
-add_library(Miner SHARED Miner.cpp)
-target_link_libraries(Miner Block BlockChain Coinbase)
+find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
 
-add_executable(MAIN main.cpp)
-target_link_libraries(MAIN BlockChain User Miner)
+set(PROJECT_SOURCES
+        main.cpp
+        UserInterface.cpp
+        UserInterface.h
+        UserInterface.ui
+)
+
+if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
+    qt_add_executable(ZINA_QT
+        ${PROJECT_SOURCES}
+    )
+else()
+    if(ANDROID)
+        add_library(ZINA_QT SHARED
+            ${PROJECT_SOURCES}
+        )
+    else()
+        add_executable(ZINA_QT
+            ${PROJECT_SOURCES}
+        )
+    endif()
+endif()
+
+target_link_libraries(ZINA_QT PRIVATE BlockChain User Qt${QT_VERSION_MAJOR}::Widgets)
