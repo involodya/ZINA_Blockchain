@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Block.h"
 #include "Balances.h"
 #include <list>
@@ -10,11 +11,11 @@
 
 // #TODO Singleton
 class BranchingChain {
-    struct Node
-    {
+    struct Node {
         Block block;
-        int index_of_prev; 
+        int index_of_prev;
         std::vector<int> successors;
+
         void dbg() const {
             std::cerr << "N_E_X_T_N_O_D_E\n";
             std::cerr << "~~~~~~~~~~~~~~~\n";
@@ -28,10 +29,13 @@ class BranchingChain {
             std::cerr << std::endl;
         }
     };
+
 public:
-    void add_block(const Block& to_add);
-    Block get_block_to_push(); 
-    BranchingChain(const Block& first_block = Block());
+    void add_block(const Block &to_add);
+
+    Block get_block_to_push();
+
+    BranchingChain(const Block &first_block = Block());
 
     size_t size() const {
         return _nodes.size() - 1;
@@ -42,11 +46,16 @@ public:
     }
 
     void dbg() const;
+
 // private:
     std::vector<int> _indexes_of_all_blocks_of_subchain(int index);
+
     void _remove_unnecessary_chains();
+
     size_t _get_length_of_chain(size_t index);
+
     std::queue<int> _get_indexes_of_suitable_chains();
+
     std::map<hash_t, int> _index_of_block;
     std::vector<Node> _nodes;
 };

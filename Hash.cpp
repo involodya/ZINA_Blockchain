@@ -1,7 +1,6 @@
 #include <cstring>
 #include "Hash.h"
 
-const size_t HASH_SIZE = SHA256_DIGEST_LENGTH;
 const Hash DEFAULT_HASH = Hash();
 
 Hash::Hash() : _hash(new uint8_t[HASH_SIZE]()) {}
@@ -18,7 +17,7 @@ Hash::Hash(const Hash &other) {
     memcpy(_hash, other._hash, sizeof(uint8_t) * HASH_SIZE);
 }
 
-Hash &Hash::operator=(const Hash& other) {
+Hash &Hash::operator=(const Hash &other) {
     if (this == &other) {
         return *this;
     }
@@ -59,12 +58,23 @@ Hash::~Hash() {
     delete[] _hash;
 }
 
+Hash& Hash::set(const std::string &hash) {
+    delete[] _hash;
+    _hash = new uint8_t[HASH_SIZE];
+    for (int i = 2; i < HASH_SIZE + 2; i += 2) {
+        _hash[i / 2 - 1] = hex[hash[i]] * 16 + hex[hash[i + 1]];
+    }
+
+    return *this;
+}
+
 
 std::ostream &operator<<(std::ostream &out, const Hash &hash) {
     out << "0x";
     out.setf(std::ios::hex, std::ios::basefield);
     for (size_t i = 0; i < HASH_SIZE; ++i) {
-        out << static_cast<int>(hash._hash[i]);
+        // TODO ADD setw and setfill IN ALL SAME PLACES
+        out << std::setw(2) << std::setfill('0') << static_cast<int>(hash._hash[i]);
     }
     out.unsetf(std::ios::hex);
     return out;

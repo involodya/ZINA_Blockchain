@@ -8,6 +8,7 @@ Block Miner::mine(const Block &block_to_mine) {
         mined_block.setNonce(current_nonce);
         hash_t current_hash = mined_block.calculateHash();
         if (isHashCorrect(current_hash)) {
+            std::cerr << "Mined! " << current_nonce << ' ' << current_hash << std::endl;
             return mined_block;
         }
     }
@@ -24,11 +25,11 @@ void Miner::create_block() {
     new_block._currentBlockHash = new_block.calculateHash();
 }
 
-void Miner::send_block() { // TODO:
+void Miner::send_block() { // TODO
 
 }
 
-hash_t Miner::_get_hash_of_last() { // TODO:
+hash_t Miner::_get_hash_of_last() { // TODO
     return Hash();
 }
 
@@ -66,6 +67,7 @@ bool Miner::verify_block(const Block &block) {
 Miner::~Miner() {
     secp256k1_context_destroy(ctx_);
 }
+
 
 // #TODO: @andzh1
 //      _get_hash_of_last()

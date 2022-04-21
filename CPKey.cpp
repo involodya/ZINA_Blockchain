@@ -36,8 +36,8 @@ CPKey::~CPKey() {
 
 public_key_t CPKey::getPublic() const {
     secp256k1_pubkey pubkey;
-    secp256k1_ec_pubkey_parse(ctx_, &pubkey, data_, COMPRESSED_PUBLIC_KEY_SIZE);
-
+    auto returnval = secp256k1_ec_pubkey_parse(ctx_, &pubkey, data_, COMPRESSED_PUBLIC_KEY_SIZE);
+//    assert(returnval);
     return pubkey;
 }
 
