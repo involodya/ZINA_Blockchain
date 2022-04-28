@@ -17,7 +17,7 @@
 #include "Block.h"
 #include "Transaction.h"
 
-bool isHashCorrect(hash_t current_hash);
+bool isHashCorrect(const hash_t &current_hash);
 
 struct ecc_pair_t {
     secret_key_t secret_key;

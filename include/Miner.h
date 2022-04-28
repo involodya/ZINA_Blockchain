@@ -2,13 +2,16 @@
 #include "Block.cpp"
 #include "BlockChain.cpp"
 #include "Coinbase.h"
+#include "constants.h"
 #include <set>
 
 class Miner {
 public:
-    Block mine(const Block &);
+    ~Miner();
 
-    bool verify_transaction(const Transaction &transaction);
+    Block mine(const Block &block);
+
+    bool verify_transaction(Transaction &transaction);
 
     bool verify_coinbase_transaction(const Coinbase &coinbase);
 
@@ -23,6 +26,8 @@ public:
     void add_block();
 
 private:
+    secp256k1_context *ctx_ = secp256k1_context_create(SECP256K1_CONTEXT_VERIFY);
+
     Block _currentBlock;
     BlockChain _currentBlockChain;
 
@@ -32,3 +37,5 @@ private:
 
     friend class Block;
 };
+
+bool isHashCorrect(const hash_t &current_hash);

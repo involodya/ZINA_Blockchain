@@ -94,8 +94,5 @@ void ecdsa() {
 }
 
 bool isHashCorrect(const hash_t &current_hash) { // hash is correct in our terms when it starts with
-    /* TODO
-     * retutn current_hash < SOME_HASH;
-     */
-    return true;
+    return current_hash < THRESHOLD_HASH;
 }

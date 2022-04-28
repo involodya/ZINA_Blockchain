@@ -6,13 +6,13 @@ Balances::Balances(const VerifiedChain &verifiedChain) {
         for (auto transaction_iterator = block_iterator->_listOfTransactions.begin();
              transaction_iterator != block_iterator->_listOfTransactions.end(); ++transaction_iterator) {
 
-            _balances_table[transaction_iterator->_hashOfSender] -= transaction_iterator->_value;
+            _balances_table[transaction_iterator->_keyOfSender] -= transaction_iterator->_value;
 
-            auto it = _balances_table.find(transaction_iterator->_hashOfRecipient);
+            auto it = _balances_table.find(transaction_iterator->_keyOfRecipient);
             if (it != _balances_table.end()) {
                 it->second += transaction_iterator->_value;
             } else {
-                _balances_table[transaction_iterator->_hashOfRecipient] = transaction_iterator->_value;
+                _balances_table[transaction_iterator->_keyOfRecipient] = transaction_iterator->_value;
             }
 
         }

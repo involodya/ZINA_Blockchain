@@ -1,3 +1,6 @@
 *.sh
 *.so
 *.o
+bin
+lib
+build

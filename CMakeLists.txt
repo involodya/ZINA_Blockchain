@@ -1,8 +1,9 @@
 cmake_minimum_required(VERSION 3.5)
 
 project(ZINA_QT LANGUAGES CXX)
+
 include_directories(include)
-include_directories(src)
+#include_directories(src)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -52,9 +53,6 @@ target_link_libraries(Coinbase PUBLIC constants)
 add_library(Block SHARED Block.cpp)
 target_link_libraries(Block PUBLIC Coinbase Transaction)
 
-add_library(hash_functions SHARED hash_functions.cpp)
-target_link_libraries(hash_functions PUBLIC Block constants)
-
 add_library(VerifiedChain SHARED VerifiedChain.cpp)
 target_link_libraries(VerifiedChain PUBLIC Block)
 
@@ -69,12 +67,20 @@ target_link_libraries(BlockChain PUBLIC VerifiedChain BranchingChain)
 
 add_library(User SHARED User.cpp)
 
+add_library(CPKey SHARED CPKey.cpp)
+target_link_libraries(User PUBLIC CPKey)
+
+add_library(Miner SHARED Miner.cpp)
+target_link_libraries(Miner Block BlockChain Coinbase)
+
+add_executable(USER_TEST user_tests.cpp)
+target_link_libraries(USER_TEST BlockChain User Miner)
+
 #add_executable(TESTER blockchain_test.cpp)
 #target_link_libraries(TESTER BlockChain)
 
 #add_executable(USER_INTERFACE User_interface.cpp)
 #target_link_libraries(USER_INTERFACE BlockChain User)
-
 
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
@@ -106,3 +112,32 @@ else()
 endif()
 
 target_link_libraries(ZINA_QT PRIVATE BlockChain User Qt${QT_VERSION_MAJOR}::Widgets)
+
+
+find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets Core Network REQUIRED)
+
+set(PROJECT_SOURCES
+        network_tests.cpp
+        networkwindow.cpp
+        networkwindow.h
+        networkwindow.ui
+        )
+
+if (${QT_VERSION_MAJOR} GREATER_EQUAL 6)
+    qt_add_executable(NETWORK
+            ${PROJECT_SOURCES}
+            )
+else ()
+    if (ANDROID)
+        add_library(NETWORK SHARED
+                ${PROJECT_SOURCES}
+                )
+    else ()
+        add_executable(NETWORK
+                ${PROJECT_SOURCES}
+                )
+    endif ()
+endif ()
+
+target_link_libraries(NETWORK PRIVATE Miner Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Network)
