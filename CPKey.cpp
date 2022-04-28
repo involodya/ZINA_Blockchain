@@ -55,7 +55,9 @@ std::ostream &operator<<(std::ostream &out, const CPKey &key) {
     out << "0x";
     out.setf(std::ios::hex, std::ios::basefield);
     for (size_t i = 0; i < COMPRESSED_PUBLIC_KEY_SIZE; ++i) {
-        out << static_cast<int>(key.getDataPointer()[i]);
+        // out << static_cast<int>(key.getDataPointer()[i]) << ' ';
+        out << std::setw(2) << std::setfill('0') << static_cast<int>(key.getDataPointer()[i]);
+
     }
     out.unsetf(std::ios::hex);
     return out;

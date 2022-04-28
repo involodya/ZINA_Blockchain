@@ -55,15 +55,8 @@ void UserInterface::on_Send_button_clicked()
 {
     AddTransactionDialog dial;
     dial.exec();
-    // std::cerr << "Users' CPKey " << this_user.getCPKey() << std::endl;
-    // this_user.getCPKey().dbg();
     Transaction new_transaction(this_user.getCPKey(), dial.dialog_recipient, dial.dialog_value, dial.dialog_message);
-    // this_user.signTransaction(new_transaction);
-    // new_transaction.dbg();
-    // this_user.sendTransaction(new_transaction);
-//    add_transaction_window.setFixedSize(400, 400);
-//    add_transaction_window.
+    this_user.signTransaction(new_transaction);
+    new_transaction.dbg();
+    this_user.sendTransaction(new_transaction);
 }
-/*
-
-*/

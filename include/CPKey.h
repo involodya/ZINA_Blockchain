@@ -23,7 +23,10 @@ public:
     void dbg() const;
 
     void set(uint8_t* new_data) {
-        data_ = new_data;
+        data_ = new uint8_t[COMPRESSED_PUBLIC_KEY_SIZE];
+        for (size_t i = 0; i < COMPRESSED_PUBLIC_KEY_SIZE; ++i) {
+            data_[i] = new_data[i];
+        }
     }
 
     bool operator<(const CPKey &other) const;

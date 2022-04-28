@@ -6,6 +6,7 @@
 #include <iostream>
 #include <QInputDialog>
 #include <Transaction.h>
+#include <unordered_map>
 #include <QDialogButtonBox>
 namespace Ui {
 class AddTransactionDialog;

@@ -16,29 +16,30 @@ AddTransactionDialog::~AddTransactionDialog()
 
 void AddTransactionDialog::on_Commit_button_clicked()
 {
-
-    std::cerr << "1" << std::endl;
     std::string hash_as_string = (ui->input_hash->displayText()).toStdString();
-//    std::cout << s << std::endl;
+    std::cout << hash_as_string << std::endl;
 //    assert(s.length() == 66); // TODO: not assert, but message on screen
     uint8_t* my_hash = new uint8_t[COMPRESSED_PUBLIC_KEY_SIZE];
-    // std::unordered_map<char, uint8_t> hex;
-    // for (uint8_t i = 0; i < 10; ++i) {
-    //     hex['0' + i] = i;
-    // }
-    // for (uint8_t i = 0; i < 6; ++i) {
-    //     hex['a' + i] = i + 10;
-    // }
-    std::cerr << "2" << std::endl;
-    for (int i = 2; i < COMPRESSED_PUBLIC_KEY_SIZE + 2; ++i) {
-        my_hash[i - 2] = static_cast<uint8_t>(hash_as_string[i]);
-        // my_hash[i/2 - 1] = hex[hash_as_string[i]] * 16 + hex[hash_as_string[i + 1]];
+    static std::unordered_map<char, uint8_t> hex = {{'0', 0},
+                                                {'1', 1},
+                                                {'2', 2},
+                                                {'3', 3},
+                                                {'4', 4},
+                                                {'5', 5},
+                                                {'6', 6},
+                                                {'7', 7},
+                                                {'8', 8},
+                                                {'9', 9},
+                                                {'a', 10},
+                                                {'b', 11},
+                                                {'c', 12},
+                                                {'d', 13},
+                                                {'e', 14},
+                                                {'f', 15}};
+    for (int i = 2; i < COMPRESSED_PUBLIC_KEY_SIZE * 2 + 2; i += 2) {
+        my_hash[i/2 - 1] = hex[hash_as_string[i]] * 16 + hex[hash_as_string[i + 1]];
     }
-    // dialog_recipient.data_ = reinterpret_cast<uint8_t*>(&hash_as_string[0]);
-    std::cerr << "3" << std::endl;
     dialog_recipient.set(my_hash);
-    dialog_recipient.dbg();
-    std::cerr << "4" << std::endl;
     std::string val = (ui->input_value->displayText()).toStdString();
     if (val == "") val = "0";
     std::string decimal_part = val, fractional_part = "0";
@@ -53,6 +54,8 @@ void AddTransactionDialog::on_Commit_button_clicked()
 
     dialog_message = (ui->input_message->displayText()).toStdString();
     close();
+    // 0x02f4eccff619b222afee90ff3f6652a85ddc49c4c1be8b46779cdf44ee4b12580c - correct CPKey to test
+
     // TODO: confirmation window
 //    QDialog show_transaction;
 //    Transaction current_transaction(dialog_recipient, dialog_recipient, dialog_value, dialog_message);
@@ -75,6 +78,7 @@ void AddTransactionDialog::on_Commit_button_clicked()
 
 }
 /*
+0x21d5599927a5454346b67f6ebd8c687a79bc0155482a6a6d8b93792955c414e312 - correct CPKey to test
 0xabobaabobaabobaabobaabobaabobaabobaabobaabobaabobaabobaaboba1234 - correct hash to test
-0xabobaabobaabobaabobaabobaabobaabobaabobaabobaabobaabobaaboba123456 - correct CPKey to test
 */
+
