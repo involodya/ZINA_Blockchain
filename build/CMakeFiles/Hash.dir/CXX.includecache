@@ -1,0 +1,26 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../include/Hash.h
+string
+-
+iomanip
+-
+iostream
+-
+openssl/sha.h
+-
+
+/home/andrey/workspace/MIPT/ZINA_Blockchain/Hash.cpp
+cstring
+-
+Hash.h
+/home/andrey/workspace/MIPT/ZINA_Blockchain/Hash.h
+
+/home/andrey/workspace/MIPT/ZINA_Blockchain/build/Hash_autogen/mocs_compilation.cpp
+

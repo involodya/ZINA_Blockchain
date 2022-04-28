@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../include/ZINA.h
+iostream
+-
+
+/home/andrey/workspace/MIPT/ZINA_Blockchain/ZINA.cpp
+ZINA.h
+/home/andrey/workspace/MIPT/ZINA_Blockchain/ZINA.h
+exception
+-
+
+/home/andrey/workspace/MIPT/ZINA_Blockchain/build/ZINA_autogen/mocs_compilation.cpp
+

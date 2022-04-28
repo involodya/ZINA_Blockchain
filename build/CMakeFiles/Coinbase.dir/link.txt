@@ -1,0 +1,1 @@
+/usr/bin/c++ -fPIC -shared -Wl,-soname,libCoinbase.so -o ../lib/libCoinbase.so CMakeFiles/Coinbase.dir/Coinbase_autogen/mocs_compilation.cpp.o CMakeFiles/Coinbase.dir/Coinbase.cpp.o  -Wl,-rpath,/home/andrey/workspace/MIPT/ZINA_Blockchain/lib ../lib/libconstants.so ../lib/libdefinitions.so ../lib/libZINA.so ../lib/libHash.so -lssl -lcrypto -lsecp256k1 

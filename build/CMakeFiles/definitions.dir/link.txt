@@ -1,0 +1,1 @@
+/usr/bin/c++ -fPIC -shared -Wl,-soname,libdefinitions.so -o ../lib/libdefinitions.so CMakeFiles/definitions.dir/definitions_autogen/mocs_compilation.cpp.o CMakeFiles/definitions.dir/definitions.cpp.o  -Wl,-rpath,/home/andrey/workspace/MIPT/ZINA_Blockchain/lib ../lib/libZINA.so ../lib/libHash.so -lssl -lcrypto -lsecp256k1 

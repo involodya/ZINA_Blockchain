@@ -1,9 +1,8 @@
 cmake_minimum_required(VERSION 3.5)
 
 project(ZINA_QT LANGUAGES CXX)
-
-set(GCC_COVERAGE_COMPILE_FLAGS "-Wall -Wextra -Weffc++ -Wc++0x-compat -Wc++11-compat -Wc++14-compat -Waggressive-loop-optimizations -Walloc-zero -Walloca -Walloca-larger-than=8192 -Warray-bounds -Wcast-align -Wcast-qual -Wchar-subscripts -Wconditionally-supported -Wconversion -Wctor-dtor-privacy -Wdangling-else -Wduplicated-branches -Wempty-body -Wfloat-equal -Wformat-nonliteral -Wformat-security -Wformat-signedness -Wformat=2 -Wformat-overflow=2 -Wformat-truncation=2 -Winline -Wlarger-than=8192 -Wvla-larger-than=8192 -Wlogical-op -Wmissing-declarations -Wnon-virtual-dtor -Wopenmp-simd -Woverloaded-virtual -Wpacked -Wpointer-arith -Wredundant-decls -Wrestrict -Wshadow -Wsign-promo -Wstack-usage=8192 -Wstrict-null-sentinel -Wstrict-overflow=2 -Wstringop-overflow=4 -Wsuggest-attribute=noreturn -Wsuggest-final-types -Wsuggest-override -Wswitch-default -Wswitch-enum -Wsync-nand -Wundef -Wunreachable-code -Wunused -Wvariadic-macros -Wno-literal-suffix -Wno-missing-field-initializers -Wnarrowing -Wno-old-style-cast -Wvarargs -Waligned-new -Walloc-size-larger-than=1073741824 -Walloc-zero -Walloca -Walloca-larger-than=8192 -Wcast-align=strict -Wdangling-else -Wduplicated-branches -Wformat-overflow=2 -Wformat-truncation=2 -Wmissing-attributes -Wmultistatement-macros -Wrestrict -Wshadow=global -Wsuggest-attribute=malloc -fcheck-new -fsized-deallocation -fstack-check -fstrict-overflow -fchkp-first-field-has-own-bounds -fchkp-narrow-to-innermost-array -flto-odr-type-merging -fno-omit-frame-pointer")
-set(GCC_COVERAGE_COMPILE_FLAGS "-fsanitize=address,alignment,bool,bounds,enum,float-cast-overflow,float-divide-by-zero,integer-divide-by-zero,leak,nonnull-attribute,null,object-size,return,returns-nonnull-attribute,shift,signed-integer-overflow,undefined,unreachable,vla-bound,vptr")
+include_directories(include)
+include_directories(src)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -11,7 +10,7 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # QtCreator supports the following variables for Android, which are identical to qmake Android variables.
@@ -33,8 +32,8 @@ set(CMAKE_CXX_STANDARD 20)
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 
-add_library(ZINA SHARED ZINA.cpp)
 
+add_library(ZINA SHARED ZINA.cpp)
 add_library(Hash SHARED Hash.cpp)
 target_link_libraries(Hash PUBLIC ssl crypto secp256k1)
 
@@ -70,15 +69,6 @@ target_link_libraries(BlockChain PUBLIC VerifiedChain BranchingChain)
 
 add_library(User SHARED User.cpp)
 
-add_library(CPKey SHARED CPKey.cpp)
-target_link_libraries(User PUBLIC CPKey)
-
-add_library(Miner SHARED Miner.cpp)
-target_link_libraries(Miner Block BlockChain Coinbase)
-
-add_executable(USER_TEST user_tests.cpp)
-target_link_libraries(USER_TEST BlockChain User Miner)
-
 #add_executable(TESTER blockchain_test.cpp)
 #target_link_libraries(TESTER BlockChain)
 
@@ -90,55 +80,29 @@ find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
 
 set(PROJECT_SOURCES
-        main.cpp
-        UserInterface.cpp
-        UserInterface.h
-        UserInterface.ui
-        )
+    main.cpp
+    UserInterface.cpp
+    UserInterface.h
+    UserInterface.ui
+    addtransactiondialog.cpp
+    addtransactiondialog.h
+    addtransactiondialog.ui
+)
 
-if (${QT_VERSION_MAJOR} GREATER_EQUAL 6)
+if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(ZINA_QT
-            ${PROJECT_SOURCES}
-            )
-else ()
-    if (ANDROID)
+        ${PROJECT_SOURCES}
+    )
+else()
+    if(ANDROID)
         add_library(ZINA_QT SHARED
-                ${PROJECT_SOURCES}
-                )
-    else ()
+            ${PROJECT_SOURCES}
+        )
+    else()
         add_executable(ZINA_QT
-                ${PROJECT_SOURCES}
-                )
-    endif ()
-endif ()
+            ${PROJECT_SOURCES}
+        )
+    endif()
+endif()
 
 target_link_libraries(ZINA_QT PRIVATE BlockChain User Qt${QT_VERSION_MAJOR}::Widgets)
-
-
-find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets Core Network REQUIRED)
-
-set(PROJECT_SOURCES
-        network_tests.cpp
-        networkwindow.cpp
-        networkwindow.h
-        networkwindow.ui
-        )
-
-if (${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    qt_add_executable(NETWORK
-            ${PROJECT_SOURCES}
-            )
-else ()
-    if (ANDROID)
-        add_library(NETWORK SHARED
-                ${PROJECT_SOURCES}
-                )
-    else ()
-        add_executable(NETWORK
-                ${PROJECT_SOURCES}
-                )
-    endif ()
-endif ()
-
-target_link_libraries(NETWORK PRIVATE Miner Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Network)

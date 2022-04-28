@@ -3,7 +3,10 @@
 
 #include <QMainWindow>
 #include <BlockChain.h>
+//#include <Balances.h>
 #include <User.h>
+#include <QMessageBox>
+#include <QWindow>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class UserInterface; }
@@ -18,11 +21,15 @@ public:
     ~UserInterface();
     BlockChain local_blockchain;
     User this_user;
-    Hash recipient;
-    ZINA value;
-    std::string message;
+//    Balances* current_balances = nullptr;
+
+//private slots:
+//    void on_Commit_hash_clicked();
+
 private slots:
-    void on_Commit_hash_clicked();
+    void on_Receive_button_clicked();
+
+    void on_Send_button_clicked();
 
 private:
     Ui::UserInterface *ui;
