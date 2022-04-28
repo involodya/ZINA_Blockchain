@@ -1,1 +1,0 @@
-/usr/bin/c++ -fPIC -shared -Wl,-soname,libBlock.so -o ../lib/libBlock.so CMakeFiles/Block.dir/Block_autogen/mocs_compilation.cpp.o CMakeFiles/Block.dir/Block.cpp.o  -Wl,-rpath,/home/andrey/workspace/MIPT/ZINA_Blockchain/lib ../lib/libCoinbase.so ../lib/libTransaction.so ../lib/libconstants.so ../lib/libdefinitions.so ../lib/libZINA.so ../lib/libHash.so -lssl -lcrypto -lsecp256k1 
