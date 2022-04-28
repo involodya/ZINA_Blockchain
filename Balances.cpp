@@ -19,7 +19,7 @@ Balances::Balances(const VerifiedChain &verifiedChain) {
     }
 }
 
-currency_t Balances::operator[](hash_t hash) const {
+currency_t Balances::operator[](CPKey hash) const {
     auto it = _balances_table.find(hash);
     if (it != _balances_table.end()) {
         return it->second;
@@ -28,7 +28,7 @@ currency_t Balances::operator[](hash_t hash) const {
     }
 }
 
-currency_t &Balances::operator[](hash_t hash) {
+currency_t &Balances::operator[](CPKey hash) {
     auto it = _balances_table.find(hash);
     if (it != _balances_table.end()) {
         return it->second;

@@ -15,7 +15,7 @@ class AddTransactionDialog : public QDialog
 {
     Q_OBJECT
 public:
-    Hash dialog_recipient;
+    CPKey dialog_recipient;
     ZINA dialog_value;
     std::string dialog_message;
     bool need_to_send = false;

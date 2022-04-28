@@ -60,3 +60,23 @@ std::ostream &operator<<(std::ostream &out, const CPKey &key) {
     out.unsetf(std::ios::hex);
     return out;
 }
+
+bool CPKey::operator==(const CPKey &other) const {
+    for (size_t i = 0; i < COMPRESSED_PUBLIC_KEY_SIZE; ++i) {
+        if (data_[i] != other.data_[i]) {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool CPKey::operator<(const CPKey &other) const {
+    for (size_t i = 0; i < COMPRESSED_PUBLIC_KEY_SIZE; ++i) {
+        if (data_[i] < other.data_[i]) {
+            return true;
+        } else if (data_[i] > other.data_[i]) {
+            return false;
+        }
+    }
+    return false;
+}

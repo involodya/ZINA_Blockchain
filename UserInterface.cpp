@@ -41,7 +41,7 @@ void UserInterface::on_Receive_button_clicked()
 {
     QMessageBox show_hash;
     std::stringstream s;
-    s << this_user.getHash();
+    s << this_user.getCPKey();
     std::string x;
     std::getline(s, x);
     QString output = QString::fromStdString(x);
@@ -53,12 +53,17 @@ void UserInterface::on_Receive_button_clicked()
 
 void UserInterface::on_Send_button_clicked()
 {
-     AddTransactionDialog dial;
-     dial.exec();
-     Transaction new_transaction(this_user.getHash(), dial.dialog_recipient, dial.dialog_value, dial.dialog_message);
-     this_user.signTransaction(new_transaction);
-     new_transaction.dbg();
-     this_user.sendTransaction(new_transaction);
+    AddTransactionDialog dial;
+    dial.exec();
+    // std::cerr << "Users' CPKey " << this_user.getCPKey() << std::endl;
+    // this_user.getCPKey().dbg();
+    Transaction new_transaction(this_user.getCPKey(), dial.dialog_recipient, dial.dialog_value, dial.dialog_message);
+    // this_user.signTransaction(new_transaction);
+    // new_transaction.dbg();
+    // this_user.sendTransaction(new_transaction);
 //    add_transaction_window.setFixedSize(400, 400);
 //    add_transaction_window.
 }
+/*
+
+*/

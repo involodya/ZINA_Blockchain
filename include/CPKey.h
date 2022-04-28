@@ -21,6 +21,14 @@ public:
     uint8_t * getDataPointer() const;
 
     void dbg() const;
+
+    void set(uint8_t* new_data) {
+        data_ = new_data;
+    }
+
+    bool operator<(const CPKey &other) const;
+    bool operator==(const CPKey &other) const;
+
 };
 
 
