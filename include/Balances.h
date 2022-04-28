@@ -3,6 +3,8 @@
 #include <map>
 #include "VerifiedChain.h"
 
+//TODO HASH change to KEY
+
 struct Balances {
     std::map<hash_t, currency_t> _balances_table;
 
