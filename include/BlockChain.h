@@ -6,21 +6,27 @@
 #include <iterator>
 
 
-// #TODO Singleton
+// #TODO: Singleton
 class BlockChain {
 public:
     // BlockChain static getInstance() { 
-    //     if (_pointerToInstance == nullptr) {  // #TODO figure out how to check existance of object
+    //     if (_pointerToInstance == nullptr) {  // #TODO: figure out how to check existance of object
     //         BlockChain instance = BlockChain();
     //         *_pointerToInstance = instance;
     //     }
     //     return *_pointerToInstance;
     // }
-    void update(); // Download latest version of blockchain from source
+    void update(); //TODO: Download latest version of blockchain from source
     void add_block(const Block& block_to_add);
     void dbg() const;
-// private:
+
+    hash_t get_hash_of_last_block() {
+        return _unverified_chain.get_hash_of_last_block();
+    }
+private:
     void _proceed_block_to_chain();
     VerifiedChain _verified_chain;
     BranchingChain _unverified_chain;
+
+    friend std::ostream& operator<<(std::ostream& out, const BlockChain& miner);
 };

@@ -1,8 +1,8 @@
 #!/bin/bash
 
-filename=$1
+#filename=$1
 
 cd bin/
-./$filename
+./ZINA_QT
 cd ..
 

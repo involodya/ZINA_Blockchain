@@ -41,6 +41,13 @@ public_key_t CPKey::getPublic() const {
     return pubkey;
 }
 
+void CPKey::set(uint8_t* new_data) {
+    data_ = new uint8_t[COMPRESSED_PUBLIC_KEY_SIZE];
+    for (size_t i = 0; i < COMPRESSED_PUBLIC_KEY_SIZE; ++i) {
+        data_[i] = new_data[i];
+    }
+}
+
 void CPKey::dbg() const {
     std::cerr << "CPKey:" << std::endl;
     std::cerr << "\tkey: " << *this << std::endl;

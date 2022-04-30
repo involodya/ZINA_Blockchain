@@ -13,6 +13,11 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background:  rgb(153, 193, 241)
+
+</string>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QLabel" name="label">
@@ -22,7 +27,12 @@
     </widget>
    </item>
    <item>
-    <widget class="QLineEdit" name="input_hash"/>
+    <widget class="QLineEdit" name="input_hash">
+     <property name="styleSheet">
+      <string notr="true">background:  rgb(255, 255, 255)
+</string>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QLabel" name="label_3">
@@ -32,7 +42,12 @@
     </widget>
    </item>
    <item>
-    <widget class="QLineEdit" name="input_value"/>
+    <widget class="QLineEdit" name="input_value">
+     <property name="styleSheet">
+      <string notr="true">background:  rgb(255, 255, 255)
+</string>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QLabel" name="label_2">
@@ -42,17 +57,30 @@
     </widget>
    </item>
    <item>
-    <widget class="QLineEdit" name="input_message"/>
+    <widget class="QLineEdit" name="input_message">
+     <property name="styleSheet">
+      <string notr="true">background:  rgb(255, 255, 255)
+</string>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QPushButton" name="Commit_button">
+     <property name="styleSheet">
+      <string notr="true">background:  rgb(26, 95, 180)
+</string>
+     </property>
      <property name="text">
       <string>Commit</string>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QPushButton" name="pushButton">
+    <widget class="QPushButton" name="CancelButton">
+     <property name="styleSheet">
+      <string notr="true">background:  rgb(26, 95, 180)
+</string>
+     </property>
      <property name="text">
       <string>Cancel</string>
      </property>
@@ -61,22 +89,5 @@
   </layout>
  </widget>
  <resources/>
- <connections>
-  <connection>
-   <sender>pushButton</sender>
-   <signal>clicked()</signal>
-   <receiver>AddTransactionDialog</receiver>
-   <slot>close()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>181</x>
-     <y>283</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>150</x>
-     <y>312</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

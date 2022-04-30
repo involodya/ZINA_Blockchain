@@ -15,8 +15,8 @@ Hash Transaction::getValueHash() const {
 }
 
 std::ostream &operator<<(std::ostream &out, const Transaction &transaction) {
-    out << transaction._keyOfSender << '-' << transaction._keyOfRecipient << '-' << transaction._value << '-'
-        << transaction._message << '-';
+    out << transaction._keyOfSender << '\n' << transaction._keyOfRecipient << '\n' << transaction._value << '\n'
+        << transaction._message << '\n';
     for (size_t i = 0; i < SERIALIZED_SIGNATURE_SIZE; ++i) {
         out << transaction.serialized_signature[i];
     }

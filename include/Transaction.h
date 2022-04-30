@@ -1,6 +1,5 @@
 #pragma once
 
-#include "constants.h"
 #include "Hash.h"
 #include "CPKey.h"
 

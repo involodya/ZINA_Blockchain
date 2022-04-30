@@ -1,6 +1,6 @@
 #pragma once
 
-#include "constants.h"
+#include "constants.cpp"
 
 struct Coinbase {
     hash_t _hashOfRecipient;

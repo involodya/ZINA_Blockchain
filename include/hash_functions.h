@@ -12,8 +12,6 @@
 #include <sys/random.h>
 #include <secp256k1.h>
 
-#include "definitions.h"
-#include "constants.h"
 #include "Block.h"
 #include "Transaction.h"
 

@@ -1,12 +1,8 @@
 #pragma once
 
-#include "constants.h"
+#include "constants.cpp"
 
 struct CPKey {
-private:
-    secp256k1_context *ctx_ = secp256k1_context_create(SECP256K1_CONTEXT_SIGN);
-    uint8_t *data_;
-public:
     CPKey();
 
     CPKey(const public_key_t &public_key);
@@ -22,16 +18,13 @@ public:
 
     void dbg() const;
 
-    void set(uint8_t* new_data) {
-        data_ = new uint8_t[COMPRESSED_PUBLIC_KEY_SIZE];
-        for (size_t i = 0; i < COMPRESSED_PUBLIC_KEY_SIZE; ++i) {
-            data_[i] = new_data[i];
-        }
-    }
+    void set(uint8_t* new_data);
 
     bool operator<(const CPKey &other) const;
     bool operator==(const CPKey &other) const;
-
+private:
+    secp256k1_context *ctx_ = secp256k1_context_create(SECP256K1_CONTEXT_SIGN);
+    uint8_t *data_;
 };
 
 

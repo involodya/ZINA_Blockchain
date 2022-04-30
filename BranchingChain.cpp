@@ -1,5 +1,4 @@
 #include "BranchingChain.h"
-#include <exception>
 
 void BranchingChain::dbg() const {
     std::cerr << "BranchingChain" << std::endl;
@@ -13,23 +12,57 @@ void BranchingChain::dbg() const {
     }
 }
 
+void BranchingChain::Node::dbg() const {
+    std::cerr << "N_E_X_T_N_O_D_E\n";
+    std::cerr << "~~~~~~~~~~~~~~~\n";
+    // std::cerr << "Node in BranchingChain:" << std::endl;
+    block.dbg();
+    std::cerr << "index_of_previous = " << index_of_previous << std::endl;
+    std::cerr << "successors:\t";
+    for (auto s: successors) std::cerr << s << ' ';
+    std::cerr << std::endl;
+    std::cerr << "~~~~~~~~~~~~~~~";
+    std::cerr << std::endl;
+}
+
+std::ostream& operator<<(std::ostream& out, const BranchingChain::Node& node) {
+    out << node.block << ' ' << node.index_of_previous << ' ';
+    for (auto sc: node.successors) {
+        out << sc << ' ';
+    }
+    return out;
+}
+
+
+
+std::ostream& operator<<(std::ostream& out, const BranchingChain& bch) {
+    for (auto it: bch._nodes) {
+        out << it;
+    }
+    for (auto i: bch._index_of_block) {
+        out << i.first << " " << i.second << ' ';
+    }
+    return out;
+}
+
+
 BranchingChain::BranchingChain(const Block& first_block) {
     Node default_node;
     default_node.block = first_block;
-    default_node.index_of_prev = -1;
+    default_node.index_of_previous = -1;
     _nodes.push_back(default_node);
     _index_of_block[default_node.block._currentBlockHash] = 0;
 }
 
 void BranchingChain::add_block(const Block& block_to_add) {
     Node node_to_add;
-    node_to_add.index_of_prev = 0;
+    node_to_add.index_of_previous = 0;
     node_to_add.block = block_to_add;
     _index_of_block[block_to_add._currentBlockHash] = _nodes.size();
     if (_index_of_block.find(block_to_add._previousBlockHash) != _index_of_block.end()) {
-        node_to_add.index_of_prev = _index_of_block[block_to_add._previousBlockHash];
+        node_to_add.index_of_previous = _index_of_block[block_to_add._previousBlockHash];
     } 
-    _nodes[node_to_add.index_of_prev].successors.push_back(_nodes.size());
+    _nodes[node_to_add.index_of_previous].successors.push_back(_nodes.size());
     _nodes.push_back(node_to_add);
 }
 
@@ -40,6 +73,30 @@ size_t BranchingChain::_get_length_of_chain(size_t index) {
         answer = std::max(answer, _get_length_of_chain(next));
     }
     return answer + 1;
+}
+
+size_t BranchingChain::length_of_max_chain() {
+    return _get_length_of_chain(0) - 1;
+}
+
+size_t BranchingChain::size() const {
+    return _nodes.size() - 1;
+}
+
+hash_t BranchingChain::get_hash_of_last_block() {
+    std::queue<int> to_proceed = _get_indexes_of_suitable_chains();
+    while (!to_proceed.empty()) {
+        int current_index = to_proceed.front();
+        to_proceed.pop();
+        for (auto next: _nodes[current_index].successors) {
+            to_proceed.push(next);
+        }
+        if (to_proceed.empty()) {
+            return _nodes[current_index].block._currentBlockHash;
+        }
+    }
+    std::cerr << "Reached default return in BranchingChain::get_hash_of_last_block()";
+    return Hash();
 }
 
 std::queue<int> BranchingChain::_get_indexes_of_suitable_chains() {

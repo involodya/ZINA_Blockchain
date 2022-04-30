@@ -17,6 +17,18 @@ void Block::dbg() const {
     std::cerr << std::endl;
 }
 
+std::ostream& operator<<(std::ostream& out, const Block& block) {
+    out << block._nonce << std::endl;
+    out << block._previousBlockHash << std::endl;
+    out << block._currentBlockHash << std::endl;
+    for (const Transaction &transaction: block._listOfTransactions) {
+        out << transaction << '\n';
+    }
+    out << std::endl;
+    return out;
+}
+
+
 void Block::addTransaction(const Transaction &transaction) {
     _listOfTransactions.emplace_back(transaction);
 }

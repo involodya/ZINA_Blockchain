@@ -4,8 +4,6 @@
 #include <unordered_map>
 #include "VerifiedChain.h"
 
-//TODO HASH change to KEY
-
 struct Balances {
     std::map<CPKey, currency_t> _balances_table;
 
@@ -17,3 +15,5 @@ struct Balances {
     void dbg() const;
 
 };
+
+std::ostream &operator<<(std::ostream &out, const Balances &balances);

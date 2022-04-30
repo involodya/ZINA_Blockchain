@@ -2,7 +2,6 @@
 #include "Block.cpp"
 #include "BlockChain.cpp"
 #include "Coinbase.h"
-#include "constants.h"
 #include <set>
 
 class Miner {
@@ -35,7 +34,10 @@ private:
 
     std::set<Transaction> _unproceedTransactions;
 
-    friend class Block;
+    // friend class Block;
+    friend std::ostream& operator<<(std::ostream& out, const Miner& miner);
 };
 
 bool isHashCorrect(const hash_t &current_hash);
+
+// std::ostream& operator<<(std::ostream& out, const Miner& miner);

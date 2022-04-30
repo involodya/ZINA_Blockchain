@@ -38,6 +38,13 @@ currency_t &Balances::operator[](CPKey hash) {
     }
 }
 
+std::ostream &operator<<(std::ostream &out, const Balances &balances) {
+    for (auto it = balances._balances_table.begin(); it != balances._balances_table.end(); ++it) {
+        out << it->first << " " << it->second << std::endl;
+    }
+    return out;
+}
+
 void Balances::dbg() const {
     std::cerr << "Balances" << std::endl;
     std::cerr << "balances_table :" << std::endl;

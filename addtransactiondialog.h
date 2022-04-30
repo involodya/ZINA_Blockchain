@@ -8,6 +8,8 @@
 #include <Transaction.h>
 #include <unordered_map>
 #include <QDialogButtonBox>
+#include "confirmationwindow.h"
+
 namespace Ui {
 class AddTransactionDialog;
 }
@@ -25,6 +27,8 @@ public:
 
 private slots:
     void on_Commit_button_clicked();
+
+    void on_CancelButton_clicked();
 
 private:
     Ui::AddTransactionDialog *ui;

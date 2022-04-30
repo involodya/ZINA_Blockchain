@@ -19,3 +19,9 @@ void BlockChain::add_block(const Block& block_to_add) {
         _proceed_block_to_chain();
     }
 }
+
+std::ostream& operator<<(std::ostream& out, const BlockChain& bch) {
+    out << bch._verified_chain << ' ';
+    out << bch._unverified_chain<< ' ';
+    return out;
+}

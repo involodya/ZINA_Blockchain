@@ -21,9 +21,11 @@ public:
 
     void dbg() const;
 
-// private:
-public:
+private:
+// public:
     const Block _last_block();
 
     bool _adding_block_has_correct_parent(const Block &block_to_add);
 };
+
+std::ostream& operator<<(std::ostream& out, const VerifiedChain& miner);

@@ -1,5 +1,4 @@
 #include "Miner.h"
-//#include "hash_functions.h"
 
 Block Miner::mine(const Block &block_to_mine) {
     Block mined_block = block_to_mine;
@@ -29,7 +28,8 @@ void Miner::send_block() { // TODO
 }
 
 hash_t Miner::_get_hash_of_last() { // TODO
-    return Hash();
+    return _currentBlockChain.get_hash_of_last_block();
+    // return Hash();
 }
 
 void Miner::add_block() {
@@ -67,10 +67,19 @@ Miner::~Miner() {
     secp256k1_context_destroy(ctx_);
 }
 
-bool isHashCorrect(const hash_t &current_hash) { // hash is correct in our terms when it starts with
+// hash is correct in our terms when it is less than concrete hash (TODO: make it non-constant)
+bool isHashCorrect(const hash_t &current_hash) { 
     return current_hash < THRESHOLD_HASH;
 }
 
+std::ostream& operator<<(std::ostream& out, const Miner& miner) {
+    out << miner._currentBlock << ' ';
+    out << miner._currentBlockChain << ' ';
+    for (auto trans: miner._unproceedTransactions) {
+        out << trans << ' ';
+    }
+    return out;
+}
 
 // #TODO: @andzh1
 //      _get_hash_of_last()

@@ -13,9 +13,12 @@ void VerifiedChain::dbg() const {
     std::cerr << std::endl;
 }
 
-// VerifiedChain::VerifiedChain() {
-//     push_block(Block());
-// }
+std::ostream& operator<<(std::ostream& out, const VerifiedChain& vch) {
+    for (auto it: vch._chain_of_blocks) {
+        out << it;
+    }
+    return out;
+}
 
 const Block VerifiedChain::_last_block() {
     if (size() == 0) {

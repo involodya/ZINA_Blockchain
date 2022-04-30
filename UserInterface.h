@@ -7,6 +7,7 @@
 #include <User.h>
 #include <QMessageBox>
 #include <QWindow>
+#include "addtransactiondialog.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class UserInterface; }

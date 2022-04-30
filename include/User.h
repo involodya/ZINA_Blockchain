@@ -1,7 +1,6 @@
-#include "definitions.h"
 #include "Transaction.h"
 #include "CPKey.h"
-#include "hash_functions.h"
+// #include "hash_functions.h"
 
 class User {
 public:

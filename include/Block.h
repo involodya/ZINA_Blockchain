@@ -21,3 +21,5 @@ struct Block {
 
     void dbg() const;
 };
+
+std::ostream& operator<<(std::ostream& out, const Block& block);

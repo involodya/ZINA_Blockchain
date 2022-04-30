@@ -93,6 +93,9 @@ set(PROJECT_SOURCES
     addtransactiondialog.cpp
     addtransactiondialog.h
     addtransactiondialog.ui
+    confirmationwindow.cpp
+    confirmationwindow.h
+    confirmationwindow.ui
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
