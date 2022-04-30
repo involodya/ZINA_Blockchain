@@ -5,8 +5,7 @@ Transaction::Transaction(const CPKey &keyOfSender, const CPKey &keyOfRecipient,
                          currency_t value, const std::string &message) : _keyOfSender(keyOfSender),
                                                                          _keyOfRecipient(keyOfRecipient),
                                                                          _value(value),
-                                                                         _message(message) {
-}
+                                                                         _message(message) {}
 
 Hash Transaction::getValueHash() const {
     std::stringstream ss;
@@ -37,4 +36,18 @@ void Transaction::dbg() const {
     }
     cerr.unsetf(std::ios::hex);
     cerr << endl;
+}
+
+template<class Archive>
+void Transaction::serialize(Archive &ar, const unsigned int version) {
+    ar & _keyOfSender;
+    ar & _keyOfRecipient;
+    ar & _value;
+    ar & _message;
+    for (size_t i = 0; i < 64; ++i) {
+        ar & _signature.data[i];
+    }
+    for (size_t i = 0; i < SERIALIZED_SIGNATURE_SIZE; ++i) {
+        ar & serialized_signature[i];
+    }
 }

@@ -5,6 +5,9 @@ project(ZINA_QT LANGUAGES CXX)
 include_directories(include)
 #include_directories(src)
 
+set(GCC_COVERAGE_COMPILE_FLAGS "-Wall -Wextra -Weffc++ -Wc++0x-compat -Wc++11-compat -Wc++14-compat -Waggressive-loop-optimizations -Walloc-zero -Walloca -Walloca-larger-than=8192 -Warray-bounds -Wcast-align -Wcast-qual -Wchar-subscripts -Wconditionally-supported -Wconversion -Wctor-dtor-privacy -Wdangling-else -Wduplicated-branches -Wempty-body -Wfloat-equal -Wformat-nonliteral -Wformat-security -Wformat-signedness -Wformat=2 -Wformat-overflow=2 -Wformat-truncation=2 -Winline -Wlarger-than=8192 -Wvla-larger-than=8192 -Wlogical-op -Wmissing-declarations -Wnon-virtual-dtor -Wopenmp-simd -Woverloaded-virtual -Wpacked -Wpointer-arith -Wredundant-decls -Wrestrict -Wshadow -Wsign-promo -Wstack-usage=8192 -Wstrict-null-sentinel -Wstrict-overflow=2 -Wstringop-overflow=4 -Wsuggest-attribute=noreturn -Wsuggest-final-types -Wsuggest-override -Wswitch-default -Wswitch-enum -Wsync-nand -Wundef -Wunreachable-code -Wunused -Wvariadic-macros -Wno-literal-suffix -Wno-missing-field-initializers -Wnarrowing -Wno-old-style-cast -Wvarargs -Waligned-new -Walloc-size-larger-than=1073741824 -Walloc-zero -Walloca -Walloca-larger-than=8192 -Wcast-align=strict -Wdangling-else -Wduplicated-branches -Wformat-overflow=2 -Wformat-truncation=2 -Wmissing-attributes -Wmultistatement-macros -Wrestrict -Wshadow=global -Wsuggest-attribute=malloc -fcheck-new -fsized-deallocation -fstack-check -fstrict-overflow -fchkp-first-field-has-own-bounds -fchkp-narrow-to-innermost-array -flto-odr-type-merging -fno-omit-frame-pointer")
+set(GCC_COVERAGE_COMPILE_FLAGS "-fsanitize=address,alignment,bool,bounds,enum,float-cast-overflow,float-divide-by-zero,integer-divide-by-zero,leak,nonnull-attribute,null,object-size,return,returns-nonnull-attribute,shift,signed-integer-overflow,undefined,unreachable,vla-bound,vptr")
+
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 set(CMAKE_AUTOUIC ON)
@@ -36,7 +39,7 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 
 add_library(ZINA SHARED ZINA.cpp)
 add_library(Hash SHARED Hash.cpp)
-target_link_libraries(Hash PUBLIC ssl crypto secp256k1)
+target_link_libraries(Hash PUBLIC ssl crypto secp256k1 boost_serialization)
 
 add_library(definitions SHARED definitions.cpp)
 target_link_libraries(definitions PUBLIC ZINA Hash)
@@ -73,8 +76,14 @@ target_link_libraries(User PUBLIC CPKey)
 add_library(Miner SHARED Miner.cpp)
 target_link_libraries(Miner Block BlockChain Coinbase)
 
+add_library(Serialization SHARED serialization_boost.cpp)
+target_link_libraries(Serialization Block BlockChain Transaction User)
+
 add_executable(USER_TEST user_tests.cpp)
 target_link_libraries(USER_TEST BlockChain User Miner)
+
+add_executable(SERIALIZATION_TEST serialization_test.cpp)
+target_link_libraries(SERIALIZATION_TEST Serialization)
 
 #add_executable(TESTER blockchain_test.cpp)
 #target_link_libraries(TESTER BlockChain)
@@ -82,7 +91,7 @@ target_link_libraries(USER_TEST BlockChain User Miner)
 #add_executable(USER_INTERFACE User_interface.cpp)
 #target_link_libraries(USER_INTERFACE BlockChain User)
 
-find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets REQUIRED)
+find_package(QT NAMES Qt${QT_VERSION_MAJOR} Qt6 Qt5 COMPONENTS Widgets REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
 
 set(PROJECT_SOURCES
@@ -117,7 +126,7 @@ endif()
 target_link_libraries(ZINA_QT PRIVATE BlockChain User Qt${QT_VERSION_MAJOR}::Widgets)
 
 
-find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets REQUIRED)
+find_package(QT NAMES Qt${QT_VERSION_MAJOR} Qt6 Qt5 COMPONENTS Widgets REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets Core Network REQUIRED)
 
 set(PROJECT_SOURCES

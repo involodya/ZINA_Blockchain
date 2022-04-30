@@ -70,6 +70,12 @@ void ZINA::dbg() const {
     std::cerr << "{" << *this << "}" << std::endl;
 }
 
+template<class Archive>
+void ZINA::serialize(Archive &ar, const unsigned int version) {
+    ar & _integer_part;
+    ar & _fractional_part;
+}
+
 std::ostream &operator<<(std::ostream &out, const ZINA &zina) {
     out << zina._integer_part << '.' << zina._fractional_part;
     return out;

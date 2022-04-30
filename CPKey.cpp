@@ -12,10 +12,12 @@ CPKey::CPKey(const public_key_t& public_key)
 
 CPKey::CPKey(const CPKey &other)
         : data_(new uint8_t[COMPRESSED_PUBLIC_KEY_SIZE]) {
+    std::cerr << 228 << std::endl;
     size_t len = COMPRESSED_PUBLIC_KEY_SIZE;
     public_key_t pubkey = other.getPublic();
     auto return_val = secp256k1_ec_pubkey_serialize(ctx_, data_, &len,
                                                     &pubkey, SECP256K1_EC_COMPRESSED);
+    std::cerr << 322 << std::endl;
     //TODO Exception
 }
 

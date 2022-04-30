@@ -10,12 +10,32 @@
 // #include <boost/asio/ssl/impl/src.hpp>
 #include <openssl/sha.h>
 
-const size_t HASH_SIZE = SHA256_DIGEST_LENGTH;
 
+#include <secp256k1.h>
+
+
+#include <boost/archive/tmpdir.hpp>
+
+#include <boost/archive/text_iarchive.hpp>
+#include <boost/archive/text_oarchive.hpp>
+
+#include <boost/serialization/base_object.hpp>
+#include <boost/serialization/utility.hpp>
+#include <boost/serialization/list.hpp>
+#include <boost/serialization/string.hpp>
+#include <boost/serialization/assume_abstract.hpp>
+
+
+const size_t HASH_SIZE = SHA256_DIGEST_LENGTH;
 
 
 struct Hash {
     uint8_t *_hash = nullptr;
+
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version);
 
     Hash();
 

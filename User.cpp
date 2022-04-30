@@ -89,3 +89,9 @@ CPKey User::getCPKey() const {
     return _compressed_pubkey;
 }
 
+template<class Archive>
+void User::serialize(Archive &ar, const unsigned int version) {
+    ar & _keys;
+    ar & _compressed_pubkey;
+}
+

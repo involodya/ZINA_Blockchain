@@ -1,21 +1,25 @@
 #include "networkwindow.h"
 #include "ui_networkwindow.h"
 
-NetworkWindow::NetworkWindow(QWidget *parent) :
-        QMainWindow(parent),
-        ui(new Ui::NetworkWindow) {
+NetworkWindow::NetworkWindow(size_t port, QWidget *parent) :
+        port(port), QMainWindow(parent), ui(new Ui::NetworkWindow), manager(new QNetworkAccessManager()) {
     ui->setupUi(this);
+    ui->textinfo->append(QString::fromUtf8("port: ") + QString::number(port) + "\n\r");
+
+    QObject::connect(manager, SIGNAL(finished(QNetworkReply * )),
+                     this, SLOT(managerFinished(QNetworkReply * )));
 }
 
 NetworkWindow::~NetworkWindow() {
     delete ui;
+    delete manager;
     server_status = 0;
 }
 
 void NetworkWindow::on_starting_clicked() {
     tcpServer = new QTcpServer(this);
     connect(tcpServer, SIGNAL(newConnection()), this, SLOT(newuser()));
-    if (!tcpServer->listen(QHostAddress::Any, 33333) && server_status == 0) {
+    if (!tcpServer->listen(QHostAddress::Any, port) && server_status == 0) {
         qDebug() << QObject::tr("Unable to start the server: %1.").arg(tcpServer->errorString());
         ui->textinfo->append(tcpServer->errorString());
     } else {
@@ -26,7 +30,7 @@ void NetworkWindow::on_starting_clicked() {
     }
 }
 
-void NetworkWindow::on_stoping_clicked() {
+void NetworkWindow::on_stopping_clicked() {
     if (server_status == 1) {
                 foreach(int i, SClients.keys()) {
                 QTextStream os(SClients[i]);
@@ -68,4 +72,20 @@ void NetworkWindow::slotReadClient() {
     // Если нужно закрыть сокет
     clientSocket->close();
     SClients.remove(idusersocs);
+}
+
+void NetworkWindow::on_requesting_clicked() {
+    request.setUrl(QUrl("http://localhost:33333"));
+    manager->get(request);
+}
+
+void NetworkWindow::managerFinished(QNetworkReply *reply) {
+    if (reply->error()) {
+        qDebug() << reply->errorString();
+        return;
+    }
+
+    QString answer = reply->readAll();
+    ui->textinfo->append(answer + "\n\r");
+    qDebug() << answer;
 }

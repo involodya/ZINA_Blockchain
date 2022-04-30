@@ -2,6 +2,15 @@
 
 Block::Block() : _nonce(0), _listOfTransactions({}) {}
 
+template<class Archive>
+void Block::serialize(Archive &ar, const unsigned version) {
+    ar & _nonce;
+    ar & _previousBlockHash;
+    ar & _currentBlockHash;
+    ar & _listOfTransactions;
+    ar & coinbase_transaction;
+}
+
 void Block::setNonce(nonce_t new_nonce) {
     _nonce = new_nonce;
 }

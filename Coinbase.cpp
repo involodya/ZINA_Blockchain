@@ -15,7 +15,14 @@ std::ostream &operator<<(std::ostream &out, const Coinbase &coinbase) {
 }
 
 void Coinbase::dbg() {
-    std::cerr << "_keyOfRecipient: " << _hashOfRecipient << std::endl;
+    std::cerr << "_hashOfRecipient: " << _hashOfRecipient << std::endl;
     std::cerr << "_value: " << _value << std::endl;
     std::cerr << "_message: " << _message << std::endl;
+}
+
+template<class Archive>
+void Coinbase::serialize(Archive &ar, const unsigned int version) {
+    ar & _hashOfRecipient;
+    ar & _value;
+    ar & _message;
 }

@@ -2,7 +2,26 @@
 
 #include <iostream>
 
+#include <secp256k1.h>
+
+#include <boost/archive/tmpdir.hpp>
+
+#include <boost/archive/text_iarchive.hpp>
+#include <boost/archive/text_oarchive.hpp>
+
+#include <boost/serialization/base_object.hpp>
+#include <boost/serialization/utility.hpp>
+#include <boost/serialization/list.hpp>
+#include <boost/serialization/string.hpp>
+#include <boost/serialization/assume_abstract.hpp>
+
 struct ZINA {
+
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version);
+
     static const size_t NUMBER_OF_DECIMAL_PLACES = 8;
     static const size_t MOD_OF_DECIMAL_PLACES = 1e8;
 

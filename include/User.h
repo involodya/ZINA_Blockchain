@@ -4,6 +4,12 @@
 
 class User {
 public:
+
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version);
+
     User();
 
     explicit User(const secret_key_t &secret_key);

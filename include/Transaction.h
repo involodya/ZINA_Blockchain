@@ -5,6 +5,12 @@
 
 class Transaction {
 public:
+
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version);
+
     CPKey _keyOfSender;
     CPKey _keyOfRecipient;
     currency_t _value;

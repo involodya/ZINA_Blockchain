@@ -58,23 +58,23 @@ Hash::~Hash() {
     delete[] _hash;
 }
 
-Hash& Hash::set(const std::string &hash) {
+Hash &Hash::set(const std::string &hash) {
     static std::unordered_map<char, uint8_t> hex = {{'0', 0},
-                                                {'1', 1},
-                                                {'2', 2},
-                                                {'3', 3},
-                                                {'4', 4},
-                                                {'5', 5},
-                                                {'6', 6},
-                                                {'7', 7},
-                                                {'8', 8},
-                                                {'9', 9},
-                                                {'a', 10},
-                                                {'b', 11},
-                                                {'c', 12},
-                                                {'d', 13},
-                                                {'e', 14},
-                                                {'f', 15}};
+                                                    {'1', 1},
+                                                    {'2', 2},
+                                                    {'3', 3},
+                                                    {'4', 4},
+                                                    {'5', 5},
+                                                    {'6', 6},
+                                                    {'7', 7},
+                                                    {'8', 8},
+                                                    {'9', 9},
+                                                    {'a', 10},
+                                                    {'b', 11},
+                                                    {'c', 12},
+                                                    {'d', 13},
+                                                    {'e', 14},
+                                                    {'f', 15}};
     delete[] _hash;
     _hash = new uint8_t[HASH_SIZE];
     for (int i = 2; i < HASH_SIZE + 2; i += 2) {
@@ -82,6 +82,13 @@ Hash& Hash::set(const std::string &hash) {
     }
 
     return *this;
+}
+
+template<class Archive>
+void Hash::serialize(Archive &ar, const unsigned int version) {
+    for (size_t i = 0; i < HASH_SIZE; ++i) {
+        ar & _hash[i];
+    }
 }
 
 
