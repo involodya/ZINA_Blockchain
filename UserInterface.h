@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include <BlockChain.h>
-//#include <Balances.h>
+#include <Balances.h>
 #include <User.h>
 #include <QMessageBox>
 #include <QWindow>
@@ -22,7 +22,8 @@ public:
     ~UserInterface();
     BlockChain local_blockchain;
     User this_user;
-//    Balances* current_balances = nullptr;
+    ZINA current_balance = ZINA(1000);
+    Balances current_balances;
 
 //private slots:
 //    void on_Commit_hash_clicked();
@@ -36,3 +37,4 @@ private:
     Ui::UserInterface *ui;
 };
 #endif // USERINTERFACE_H
+

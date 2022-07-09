@@ -27,3 +27,4 @@ public:
 };
 
 std::ostream &operator<<(std::ostream &out, const Transaction &transaction);
+std::istream &operator>>(std::istream &in, Transaction &transaction);

@@ -23,6 +23,15 @@ public:
     hash_t get_hash_of_last_block() {
         return _unverified_chain.get_hash_of_last_block();
     }
+
+    const VerifiedChain& get_verified_chain() const {
+        return _verified_chain;
+    }
+
+    BlockChain() = default;
+    BlockChain(const VerifiedChain& verified_chain):
+        _verified_chain(verified_chain) {}
+
 private:
     void _proceed_block_to_chain();
     VerifiedChain _verified_chain;

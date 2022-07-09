@@ -17,8 +17,6 @@ public:
         return _chain_of_blocks.size();
     }
 
-    // VerifiedChain() = default;
-
     void dbg() const;
 
 private:

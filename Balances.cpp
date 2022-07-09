@@ -2,9 +2,9 @@
 
 Balances::Balances(const VerifiedChain &verifiedChain) {
     for (auto block_iterator = verifiedChain._chain_of_blocks.begin();
-         block_iterator != verifiedChain._chain_of_blocks.end(); ++block_iterator) {
+        block_iterator != verifiedChain._chain_of_blocks.end(); ++block_iterator) {
         for (auto transaction_iterator = block_iterator->_listOfTransactions.begin();
-             transaction_iterator != block_iterator->_listOfTransactions.end(); ++transaction_iterator) {
+            transaction_iterator != block_iterator->_listOfTransactions.end(); ++transaction_iterator) {
 
             _balances_table[transaction_iterator->_keyOfSender] -= transaction_iterator->_value;
 

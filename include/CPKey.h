@@ -29,3 +29,4 @@ private:
 
 
 std::ostream &operator<<(std::ostream &out, const CPKey &key);
+std::istream& operator>>(std::istream& in, CPKey &key);

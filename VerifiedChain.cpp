@@ -1,5 +1,6 @@
 #include "VerifiedChain.h"
 
+
 void VerifiedChain::dbg() const {
     std::cerr << "VerifiedChain" << std::endl;
     std::cerr << "_chain_of_blocks:" << std::endl;
@@ -19,6 +20,25 @@ std::ostream& operator<<(std::ostream& out, const VerifiedChain& vch) {
     }
     return out;
 }
+
+
+/* 
+Constructs VerifiedChain from file of concrete format:
+[cpkey of sender] [cpkey of recipient] [value] [message]
+*/
+// std::istream& operator>>(std::istream& in, VerifiedChain& vch) {
+//     size_t number_of_transactions;
+//     in >> number_of_transactions;
+//     for (size_t i = 0; i < number_of_transactions; ++i) {
+//         CPKey sender, recipient;
+//         in >> sender >> recipient;
+//         std::string value_as_string, message;
+//         in >> value_as_string >> message;
+//         Transaction new_transaction(sender, recipient, ZINA(value_as_string), message);
+
+//     }
+// }
+
 
 const Block VerifiedChain::_last_block() {
     if (size() == 0) {

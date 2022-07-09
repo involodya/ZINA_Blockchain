@@ -72,6 +72,16 @@ std::ostream &operator<<(std::ostream &out, const CPKey &key) {
     return out;
 }
 
+std::istream& operator>>(std::istream& in, CPKey &key) {
+    std::string s;
+    in >> s;
+    uint8_t* data = new uint8_t[s.size()];
+    for (size_t i = 0; i < s.size(); ++i) data[i] = s[i];
+    key.set(data);
+    return in;
+}
+
+
 bool CPKey::operator==(const CPKey &other) const {
     for (size_t i = 0; i < COMPRESSED_PUBLIC_KEY_SIZE; ++i) {
         if (data_[i] != other.data_[i]) {

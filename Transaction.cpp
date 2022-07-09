@@ -22,6 +22,15 @@ std::ostream &operator<<(std::ostream &out, const Transaction &transaction) {
     return out;
 }
 
+
+std::istream &operator>>(std::istream &in, Transaction &transaction) {
+    std::string value_as_string;
+    in >> transaction._keyOfSender >> transaction._keyOfRecipient >> value_as_string >> transaction._message;
+    transaction._value = ZINA(value_as_string);
+    return in;
+}
+
+
 void Transaction::dbg() const {
     using std::cerr, std::endl;
     cerr << "Transaction" << std::endl;

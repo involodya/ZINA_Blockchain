@@ -82,8 +82,8 @@ target_link_libraries(Serialization Block BlockChain Transaction User)
 add_executable(USER_TEST user_tests.cpp)
 target_link_libraries(USER_TEST BlockChain User Miner)
 
-add_executable(SERIALIZATION_TEST serialization_test.cpp)
-target_link_libraries(SERIALIZATION_TEST Serialization)
+# add_executable(SERIALIZATION_TEST serialization_test.cpp)
+# target_link_libraries(SERIALIZATION_TEST Serialization)
 
 #add_executable(TESTER blockchain_test.cpp)
 #target_link_libraries(TESTER BlockChain)
@@ -123,7 +123,7 @@ else()
     endif()
 endif()
 
-target_link_libraries(ZINA_QT PRIVATE BlockChain User Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(ZINA_QT PRIVATE BlockChain Balances User Qt${QT_VERSION_MAJOR}::Widgets)
 
 
 find_package(QT NAMES Qt${QT_VERSION_MAJOR} Qt6 Qt5 COMPONENTS Widgets REQUIRED)

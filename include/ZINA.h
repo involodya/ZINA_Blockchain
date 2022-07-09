@@ -33,6 +33,8 @@ struct ZINA {
     ZINA() = default;
 
     ZINA(size_t integer_part, size_t fractional_part);
+    
+    explicit ZINA(const std::string& s);
 
     ZINA &operator+=(const ZINA &other);
     ZINA &operator-=(const ZINA &other);
@@ -48,6 +50,8 @@ struct ZINA {
     bool operator>=(const ZINA &other) const;
 
     void dbg() const;
+
+    std::string toString() const;
 };
 
 std::ostream &operator<<(std::ostream &out, const ZINA &zina);

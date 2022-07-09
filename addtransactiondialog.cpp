@@ -36,7 +36,7 @@ void AddTransactionDialog::on_Commit_button_clicked()
     bool correctly_proceed = true;
     if (hash_as_string.length() != COMPRESSED_PUBLIC_KEY_SIZE * 2 + 2) {
         QMessageBox warning;
-        warning.setStyleSheet("background:  rgb(153, 193, 241)");
+        warning.setStyleSheet(QString::fromStdString(color_of_interface));
         QString output = QString::fromStdString("Check hash of receiver: it has inappropriate size");
         warning.setText(output);
         warning.setWindowTitle("Warning");
@@ -47,7 +47,7 @@ void AddTransactionDialog::on_Commit_button_clicked()
     if (!correctly_proceed) close();
     if (hash_as_string.substr(0, 4) != "0x02" && correctly_proceed) {
         QMessageBox warning;
-        warning.setStyleSheet("background:  rgb(153, 193, 241)");
+        warning.setStyleSheet(QString::fromStdString(color_of_interface));
         QString output = QString::fromStdString("Check hash of receiver: it must have prefix \'0x02\'");
         warning.setText(output);
         warning.setWindowTitle("Warning");
@@ -63,6 +63,8 @@ void AddTransactionDialog::on_Commit_button_clicked()
     }
     dialog_recipient.set(my_hash);
     dialog_recipient.dbg();
+    // Proceed hash, proceeding value now
+
     std::string val = (ui->input_value->displayText()).toStdString();
     if (val == "") val = "0";
     std::string decimal_part = val, fractional_part = "0";
@@ -75,8 +77,9 @@ void AddTransactionDialog::on_Commit_button_clicked()
     }
     if (fractional_part.length() > ZINA::NUMBER_OF_DECIMAL_PLACES && correctly_proceed) {
         QMessageBox warning;
-        warning.setStyleSheet("background:  rgb(153, 193, 241)");
-        QString output = QString::fromStdString("Incorrect value: fractional part size must be <= 8");
+        warning.setStyleSheet(QString::fromStdString(color_of_interface));
+        QString output = QString::fromStdString("Incorrect value: fractional part size must be <= "
+                                                + std::to_string(ZINA::NUMBER_OF_DECIMAL_PLACES));
         warning.setText(output);
         warning.setWindowTitle("Warning");
         correctly_proceed = false;
@@ -84,11 +87,12 @@ void AddTransactionDialog::on_Commit_button_clicked()
         close();
     }
     if (!correctly_proceed) close();
+    fractional_part += std::string(ZINA::NUMBER_OF_DECIMAL_PLACES - fractional_part.size(), '0');
     try {
         dialog_value = {std::stoull(decimal_part), std::stoull(fractional_part)};
     }  catch (...) {
         QMessageBox warning;
-        warning.setStyleSheet("background:  rgb(153, 193, 241)");
+        warning.setStyleSheet(QString::fromStdString(color_of_interface));
         QString output = QString::fromStdString("Incorrect value");
         warning.setText(output);
         warning.setWindowTitle("Warning");
@@ -97,6 +101,7 @@ void AddTransactionDialog::on_Commit_button_clicked()
         close();
     }
     if (!correctly_proceed) close();
+    // Processed
 
     dialog_message = (ui->input_message->displayText()).toStdString();
 //    std::cerr << "1" << std::endl;
@@ -104,7 +109,7 @@ void AddTransactionDialog::on_Commit_button_clicked()
     if (correctly_proceed) {
         ConfirmationWindow confirm;
         confirm.exec();
-        need_to_send = confirm.answer;
+        accepted_to_be_sent = confirm.answer;
     }
 
     close();

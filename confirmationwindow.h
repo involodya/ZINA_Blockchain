@@ -2,6 +2,7 @@
 #define CONFIRMATIONWINDOW_H
 
 #include <QDialog>
+const std::string color_of_interface = "background:  rgb(153, 193, 241)";
 
 namespace Ui {
 class ConfirmationWindow;

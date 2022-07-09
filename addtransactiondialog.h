@@ -19,9 +19,9 @@ class AddTransactionDialog : public QDialog
     Q_OBJECT
 public:
     CPKey dialog_recipient;
-    ZINA dialog_value;
+    ZINA dialog_value = ZINA(0);
     std::string dialog_message;
-    bool need_to_send = false;
+    bool accepted_to_be_sent = false;
     explicit AddTransactionDialog(QWidget *parent = nullptr);
     ~AddTransactionDialog();
 
